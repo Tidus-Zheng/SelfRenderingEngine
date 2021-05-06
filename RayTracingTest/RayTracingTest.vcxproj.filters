@@ -18,5 +18,8 @@
     <ClCompile Include="RayTracingTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\deps\glad_gl.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

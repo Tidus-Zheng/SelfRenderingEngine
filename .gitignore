@@ -31,3 +31,6 @@
 *.out
 *.app
 .vs
+src/CMakeFiles
+src/CMakeLists.txt
+*.cmake
