@@ -34,3 +34,5 @@
 src/CMakeFiles
 src/CMakeLists.txt
 *.cmake
+RayTracingTest/x64/Debug
+x64

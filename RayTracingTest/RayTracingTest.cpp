@@ -1,11 +1,15 @@
-﻿#include <glad/gl.h>
+﻿
+#include "linmath.h"
+
+#include <glad/gl.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-#include "linmath.h"
-
+#include <ostream>
+#include <istream>
 #include <stdlib.h>
 #include <stdio.h>
+
 
 static const struct
 {
@@ -74,7 +78,7 @@ int main(void)
 
     glfwMakeContextCurrent(window);
     gladLoadGL(glfwGetProcAddress);
-    glfwSwapInterval(1);
+    glfwSwapInterval(0); //1: 60fps, 0:unlimit
 
     // NOTE: OpenGL error checks have been omitted for brevity
 
@@ -106,8 +110,23 @@ int main(void)
     glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
         sizeof(vertices[0]), (void*)(sizeof(float) * 2));
 
+    float currentTime = static_cast<float>(glfwGetTime());
+    float lastFramesPrint = currentTime;
+    float frameCount = 0;
+
     while (!glfwWindowShouldClose(window))
     {
+        frameCount++;
+        float newTime = static_cast<float>(glfwGetTime());
+        float deltaTime = newTime - currentTime;
+        currentTime = newTime;
+
+        if (newTime - lastFramesPrint > 1.0f) {
+            printf("FPS: %f\n", frameCount);
+            lastFramesPrint = newTime;
+            frameCount = 0;
+        }
+
         float ratio;
         int width, height;
         mat4x4 m, p, mvp;
