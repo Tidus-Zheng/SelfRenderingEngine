@@ -1,15 +1,12 @@
-﻿
-#include "linmath.h"
+﻿#include "linmath.h"
 
 #include <glad/gl.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-#include <ostream>
-#include <istream>
+#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-
 
 static const struct
 {
@@ -116,13 +113,14 @@ int main(void)
 
     while (!glfwWindowShouldClose(window))
     {
+        //check fps
         frameCount++;
         float newTime = static_cast<float>(glfwGetTime());
         float deltaTime = newTime - currentTime;
         currentTime = newTime;
 
         if (newTime - lastFramesPrint > 1.0f) {
-            printf("FPS: %f\n", frameCount);
+            std::cout << "FPS: " << frameCount << std::endl;
             lastFramesPrint = newTime;
             frameCount = 0;
         }
