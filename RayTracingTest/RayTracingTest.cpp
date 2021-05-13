@@ -8,6 +8,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
+#include <string>
+#include <fstream>
+#include <sstream>
 
 static const struct
 {
@@ -20,26 +23,6 @@ static const struct
 	{   0.f,  0.6f, 0.f, 0.f, 1.f }
 };
 
-static const char* vertex_shader_text =
-"#version 110\n"
-"uniform mat4 MVP;\n"
-"attribute vec3 vCol;\n"
-"attribute vec2 vPos;\n"
-"varying vec3 color;\n"
-"void main()\n"
-"{\n"
-"    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n"
-"    color = vCol;\n"
-"}\n";
-
-static const char* fragment_shader_text =
-"#version 110\n"
-"varying vec3 color;\n"
-"void main()\n"
-"{\n"
-"    gl_FragColor = vec4(color, 1.0);\n"
-"}\n";
-
 static void error_callback(int error, const char* description)
 {
 	fprintf(stderr, "Error: %s\n", description);
@@ -49,6 +32,27 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
+
+std::string readFromFile(const GLchar* pathToFile)
+{
+	std::string content;
+	std::ifstream fileStream(pathToFile, std::ios::in);
+
+	if (!fileStream.is_open()) {
+		std::cerr << "Could not read file " << pathToFile << ". File does not exist." << std::endl;
+		return "";
+	}
+
+	std::string line = "";
+	while (!fileStream.eof()) {
+		std::getline(fileStream, line);
+		content.append(line + "\n");
+	}
+
+	fileStream.close();
+	std::cout << "'" << content << "'" << std::endl;
+	return content;
 }
 
 int main(void)
@@ -80,12 +84,18 @@ int main(void)
 
 	// NOTE: OpenGL error checks have been omitted for brevity
 
+	std::string vertexShaderSrc = readFromFile("E:/ray tracing/ray-tracing/RayTracingTest/vertex.vs");
+	std::string fragmentShaderSrc = readFromFile("E:/ray tracing/ray-tracing/RayTracingTest/fragment.fs");
+
+	const char* vertexPointer = vertexShaderSrc.c_str();
+	const char* fragmentPointer = fragmentShaderSrc.c_str();
+
 	glGenBuffers(1, &vertex_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
+	glShaderSource(vertex_shader, 1, &vertexPointer, NULL);
 	glCompileShader(vertex_shader);
 
 	GLint result;
@@ -100,7 +110,7 @@ int main(void)
 	}
 
 	fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
+	glShaderSource(fragment_shader, 1, &fragmentPointer, NULL);
 	glCompileShader(fragment_shader);
 
 	glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &result);
