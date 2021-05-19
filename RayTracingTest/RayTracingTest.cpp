@@ -12,6 +12,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "ShaderManager.h"
+
 static const struct
 {
 	float x, y;
@@ -84,48 +86,17 @@ int main(void)
 
 	// NOTE: OpenGL error checks have been omitted for brevity
 
-	std::string vertexShaderSrc = readFromFile("E:/ray tracing/ray-tracing/RayTracingTest/vertex.vs");
-	std::string fragmentShaderSrc = readFromFile("E:/ray tracing/ray-tracing/RayTracingTest/fragment.fs");
-
-	const char* vertexPointer = vertexShaderSrc.c_str();
-	const char* fragmentPointer = fragmentShaderSrc.c_str();
-
 	glGenBuffers(1, &vertex_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertex_shader, 1, &vertexPointer, NULL);
-	glCompileShader(vertex_shader);
-
-	GLint result;
-	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &result);
-	if (result == GL_FALSE) {
-		GLint length;
-		glGetShaderiv(vertex_shader, GL_INFO_LOG_LENGTH, &length);
-		std::vector<char> error(length);
-		glGetShaderInfoLog(vertex_shader, length, &length, &error[0]);
-		std::cout << "Failed to compile vertex shader: " << &error[0] << std::endl;
-		glDeleteShader(vertex_shader);
-	}
-
-	fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragment_shader, 1, &fragmentPointer, NULL);
-	glCompileShader(fragment_shader);
-
-	glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &result);
-	if (result == GL_FALSE) {
-		GLint length;
-		glGetShaderiv(fragment_shader, GL_INFO_LOG_LENGTH, &length);
-		std::vector<char> error(length);
-		glGetShaderInfoLog(fragment_shader, length, &length, &error[0]);
-		std::cout << "Failed to compile fragment shader: " << &error[0] << std::endl;
-		glDeleteShader(fragment_shader);
-	}
-
 	program = glCreateProgram();
-	glAttachShader(program, vertex_shader);
-	glAttachShader(program, fragment_shader);
+
+	ShaderManger* simpleShader = new ShaderManger();
+	simpleShader->init("vertex.vs", "fragment.fs");
+	glAttachShader(program, simpleShader->GetVertexShader());
+	glAttachShader(program, simpleShader->GetFragmentShader());
+
 	glLinkProgram(program);
 
 	mvp_location = glGetUniformLocation(program, "MVP");

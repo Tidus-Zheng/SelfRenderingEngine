@@ -145,10 +145,14 @@
   <ItemGroup>
     <ClCompile Include="..\deps\glad_gl.c" />
     <ClCompile Include="RayTracingTest.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.fs" />
     <None Include="vertex.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ShaderManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
