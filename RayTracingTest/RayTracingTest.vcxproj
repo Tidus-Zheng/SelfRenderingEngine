@@ -117,7 +117,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\ray tracing\ray-tracing\deps;E:\ray tracing\ray-tracing\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\ray tracing\ray-tracing\deps;E:\ray tracing\ray-tracing\include;E:\ray tracing\ray-tracing\deps\glm</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -144,11 +144,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\deps\glad_gl.c" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="RayTracingTest.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Object.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\fragment.fs" />

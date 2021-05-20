@@ -1,20 +1,12 @@
 #pragma once
-#include <glad/gl.h>
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
+#include "Utility.h"
 
 class ShaderManger {
 	GLuint vertex_shader, fragment_shader, program;
 
 	std::string ReadFromFile(const GLchar* pathToFile);
 public:
-	ShaderManger() {
-
-	}
+	ShaderManger() { }
 
 	~ShaderManger() {
 		glDeleteProgram(program);
