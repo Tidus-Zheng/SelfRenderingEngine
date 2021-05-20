@@ -60,7 +60,7 @@ std::string readFromFile(const GLchar* pathToFile)
 int main(void)
 {
 	GLFWwindow* window;
-	GLuint vertex_buffer, vertex_shader, fragment_shader, program;
+	GLuint vertex_buffer;
 	GLint mvp_location, vpos_location, vcol_location;
 
 	glfwSetErrorCallback(error_callback);
@@ -85,23 +85,16 @@ int main(void)
 	glfwSwapInterval(0); //1: 60fps, 0:unlimit
 
 	// NOTE: OpenGL error checks have been omitted for brevity
-
 	glGenBuffers(1, &vertex_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	program = glCreateProgram();
+	ShaderManger simpleShader;// = new ShaderManger();
+	simpleShader.init("vertex.vs", "fragment.fs");
 
-	ShaderManger* simpleShader = new ShaderManger();
-	simpleShader->init("vertex.vs", "fragment.fs");
-	glAttachShader(program, simpleShader->GetVertexShader());
-	glAttachShader(program, simpleShader->GetFragmentShader());
-
-	glLinkProgram(program);
-
-	mvp_location = glGetUniformLocation(program, "MVP");
-	vpos_location = glGetAttribLocation(program, "vPos");
-	vcol_location = glGetAttribLocation(program, "vCol");
+	mvp_location = simpleShader.GetUniformLocation("MVP");
+	vpos_location = simpleShader.GetAttribLocation("vPos");
+	vcol_location = simpleShader.GetAttribLocation("vCol");
 
 	glEnableVertexAttribArray(vpos_location);
 	glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE,
@@ -143,7 +136,7 @@ int main(void)
 		mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
 		mat4x4_mul(mvp, p, m);
 
-		glUseProgram(program);
+		simpleShader.UseProgram();
 		glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat*)mvp);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 

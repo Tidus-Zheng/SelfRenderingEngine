@@ -2,7 +2,7 @@
 
 #define shader_path "E:/ray tracing/ray-tracing/RayTracingTest/shader/"
 
-std::string ShaderManger::readFromFile(const GLchar* pathToFile)
+std::string ShaderManger::ReadFromFile(const GLchar* pathToFile)
 {
 	std::string content;
 	std::ifstream fileStream(pathToFile, std::ios::in);
@@ -24,11 +24,13 @@ std::string ShaderManger::readFromFile(const GLchar* pathToFile)
 }
 
 void ShaderManger::init(std::string vertexShaderFileName, std::string fragmentShaderFileName) {
-	std::string vertexShaderSrc = readFromFile((shader_path + vertexShaderFileName).c_str());
-	std::string fragmentShaderSrc = readFromFile((shader_path + fragmentShaderFileName).c_str());
+	std::string vertexShaderSrc = ReadFromFile((shader_path + vertexShaderFileName).c_str());
+	std::string fragmentShaderSrc = ReadFromFile((shader_path + fragmentShaderFileName).c_str());
 
 	const char* vertexPointer = vertexShaderSrc.c_str();
 	const char* fragmentPointer = fragmentShaderSrc.c_str();
+
+	program = glCreateProgram();
 
 	vertex_shader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertex_shader, 1, &vertexPointer, NULL);
@@ -58,5 +60,21 @@ void ShaderManger::init(std::string vertexShaderFileName, std::string fragmentSh
 		std::cout << "Failed to compile fragment shader: " << &error[0] << std::endl;
 		glDeleteShader(fragment_shader);
 	}
+	glAttachShader(program, vertex_shader);
+	glAttachShader(program, fragment_shader);
+	glLinkProgram(program);
+}
 
+GLint ShaderManger::GetUniformLocation(std::string name) {
+	return glGetUniformLocation(program, name.c_str());
+}
+
+GLint ShaderManger::GetAttribLocation(std::string name)
+{
+	return glGetAttribLocation(program, name.c_str());
+}
+
+void ShaderManger::UseProgram()
+{
+	glUseProgram(program);
 }

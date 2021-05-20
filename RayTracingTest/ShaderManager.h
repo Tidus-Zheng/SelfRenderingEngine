@@ -8,12 +8,23 @@
 #include <vector>
 
 class ShaderManger {
-	GLuint vertex_shader, fragment_shader;
+	GLuint vertex_shader, fragment_shader, program;
 
+	std::string ReadFromFile(const GLchar* pathToFile);
 public:
-	void init(std::string vertexShaderFileName, std::string fragmentShaderFileName);
-	std::string readFromFile(const GLchar* pathToFile);
+	ShaderManger() {
 
-	GLuint GetFragmentShader() { return fragment_shader; }
-	GLuint GetVertexShader() { return vertex_shader; }
+	}
+
+	~ShaderManger() {
+		glDeleteProgram(program);
+		glDeleteShader(vertex_shader);
+		glDeleteShader(fragment_shader);
+	}
+	// shader file should in the fold named shader
+	void init(std::string vertexShaderFileName, std::string fragmentShaderFileName);
+
+	GLint GetUniformLocation(std::string name);
+	GLint GetAttribLocation(std::string name);
+	void UseProgram();
 };
