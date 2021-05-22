@@ -3,6 +3,7 @@
 #include "Utility.h"
 #include "ShaderManager.h"
 #include "Object.h"
+#include "Camera.h"
 #include <glm/gtc/type_ptr.hpp>
 
 #define Log(A) std::cout<<#A<<std::endl;
@@ -110,11 +111,16 @@ int main(void)
 		glViewport(0, 0, width, height);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		Camera perspecCamera(width, height);
+		perspecCamera.UpdatePosition(glm::vec3(0, glfwGetTime() * 0.1f, 0));
+
 		mat4x4_identity(m);
 		mat4x4_rotate_Z(m, m, (float)glfwGetTime());
-		//mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-		mat4x4_perspective(p, 480, ratio, 0.1, 1000);
-		mat4x4_mul(mvp, p, m);
+		////mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
+		//mat4x4_perspective(p, height, ratio, 0.1, 1000);
+		//mat4x4_mul(mvp, p, m);
+		perspecCamera.GetMVPMatrix(mvp);
+		mat4x4_mul(mvp, mvp, m);
 
 		simpleShader.UseProgram();
 		glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat*)mvp);
