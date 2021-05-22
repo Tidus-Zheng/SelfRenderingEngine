@@ -13,6 +13,7 @@ static void error_callback(int error, const char* description)
 	fprintf(stderr, "Error: %s\n", description);
 }
 
+//keybord event
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -34,6 +35,18 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	default:
 		break;
 	}
+}
+
+//mouse position event;
+static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+		Log(Right_Button_Click);
 }
 
 int main(void)
@@ -58,6 +71,8 @@ int main(void)
 	}
 
 	glfwSetKeyCallback(window, key_callback);
+	glfwSetCursorPosCallback(window, cursor_position_callback);
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
 
 	glfwMakeContextCurrent(window);
 	gladLoadGL(glfwGetProcAddress);
@@ -112,13 +127,10 @@ int main(void)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		Camera perspecCamera(width, height);
-		perspecCamera.UpdatePosition(glm::vec3(0, glfwGetTime() * 0.1f, 0));
 
 		mat4x4_identity(m);
 		mat4x4_rotate_Z(m, m, (float)glfwGetTime());
-		////mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-		//mat4x4_perspective(p, height, ratio, 0.1, 1000);
-		//mat4x4_mul(mvp, p, m);
+
 		perspecCamera.GetMVPMatrix(mvp);
 		mat4x4_mul(mvp, mvp, m);
 

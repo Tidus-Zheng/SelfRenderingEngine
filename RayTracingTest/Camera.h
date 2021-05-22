@@ -11,7 +11,7 @@ private:
 public:
 	Camera(int _width, int _height) :width(_width), height(_height) {
 		up = glm::vec3(0.f, 1.f, 0.f);
-		position = glm::vec3(0.f, 0.f, -0.1f);
+		position = glm::vec3(0.f, 0.f, 1.f);
 		lookAt = glm::vec3(0.f, 0.f, 0.f);
 
 		ratio = width / height;
