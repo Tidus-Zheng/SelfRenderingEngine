@@ -1,23 +1,23 @@
 #include "Object.h"
 #include <glm/gtc/type_ptr.hpp>
 
-void Object::AttributeVertices(GLint location)
+void Object::AttibuteValue(GLint location, std::vector<glm::vec3> values)
 {
 	GLuint buffer;
 	glGenBuffers(1, &buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices[0], GL_STATIC_DRAW);
-	
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*values.size(), &values[0], GL_STATIC_DRAW);
+
 	glEnableVertexAttribArray(location);
-	glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 12, (void*)0);
+	glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3) , (void*)0);
+}
+
+void Object::AttributeVertices(GLint location)
+{
+	AttibuteValue(location, vertices);
 }
 
 void Object::AttributeColors(GLint location)
 {
-	GLuint buffer;
-	glGenBuffers(1, &buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(colors), &colors[0], GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(location);
-	glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 12, (void*)0);
+	AttibuteValue(location, colors);
 }

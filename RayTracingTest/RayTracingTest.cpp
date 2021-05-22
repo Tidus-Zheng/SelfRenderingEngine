@@ -5,16 +5,7 @@
 #include "Object.h"
 #include <glm/gtc/type_ptr.hpp>
 
-static const struct
-{
-	float x, y;
-	float r, g, b;
-} vertices[3] =
-{
-	{ -0.6f, -0.4f, 1.f, 0.f, 0.f },
-	{  0.6f, -0.4f, 0.f, 1.f, 0.f },
-	{   0.f,  0.6f, 0.f, 0.f, 1.f }
-};
+#define Log(A) std::cout<<#A<<std::endl;
 
 static void error_callback(int error, const char* description)
 {
@@ -25,33 +16,28 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
 
-std::string readFromFile(const GLchar* pathToFile)
-{
-	std::string content;
-	std::ifstream fileStream(pathToFile, std::ios::in);
-
-	if (!fileStream.is_open()) {
-		std::cerr << "Could not read file " << pathToFile << ". File does not exist." << std::endl;
-		return "";
+	switch (key) {
+	case GLFW_KEY_W:
+		Log(w);
+		break;
+	case GLFW_KEY_S:
+		Log(s);
+		break;
+	case GLFW_KEY_A:
+		Log(a);
+		break;
+	case GLFW_KEY_D:
+		Log(d);
+		break;
+	default:
+		break;
 	}
-
-	std::string line = "";
-	while (!fileStream.eof()) {
-		std::getline(fileStream, line);
-		content.append(line + "\n");
-	}
-
-	fileStream.close();
-	std::cout << "'" << content << "'" << std::endl;
-	return content;
 }
 
 int main(void)
 {
 	GLFWwindow* window;
-	GLuint vertex_buffer;
 	GLint mvp_location, vpos_location, vcol_location;
 	ShaderManger simpleShader;
 
@@ -84,13 +70,13 @@ int main(void)
 
 	//create object and pass to vertex buffer
 	std::vector<glm::vec3> triVer, triCol;
-	triVer.push_back(glm::vec3(-0.6f, -0.4f, 0.f));
-	triVer.push_back(glm::vec3(0.6f, -0.4f, 0.f));
-	triVer.push_back(glm::vec3(0.f, 0.6f, 0.f));
+	triVer.push_back(glm::vec3(-0.6f, -0.4f, -1.f));
+	triVer.push_back(glm::vec3(0.6f, -0.4f, -1.f));
+	triVer.push_back(glm::vec3(0.f, 0.6f, -1.f));
 
 	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
-	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
 	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
 
 	Object triangle(triVer, triCol);
 	triangle.AttributeVertices(vpos_location);
@@ -126,8 +112,8 @@ int main(void)
 
 		mat4x4_identity(m);
 		mat4x4_rotate_Z(m, m, (float)glfwGetTime());
-		mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-		//mat4x4_perspective(p, 480, ratio, 0.1, 1000);
+		//mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
+		mat4x4_perspective(p, 480, ratio, 0.1, 1000);
 		mat4x4_mul(mvp, p, m);
 
 		simpleShader.UseProgram();

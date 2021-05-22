@@ -3,6 +3,7 @@
 #include <vector>
 
 class Object {
+private:
 public:
 	std::vector<glm::vec3> vertices, colors, triangles, normal;
 	std::vector<glm::vec2> uvs;
@@ -25,6 +26,7 @@ public:
 		colors = _colors;
 	}
 
+	void AttibuteValue(GLint location, std::vector<glm::vec3> values);
 	void AttributeVertices(GLint location);
 	void AttributeColors(GLint location);
 
