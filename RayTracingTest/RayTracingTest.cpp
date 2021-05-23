@@ -5,8 +5,9 @@
 #include "Object.h"
 #include "Camera.h"
 #include <glm/gtc/type_ptr.hpp>
+#include "Scene.h"
+#include "RayTracingTest.h"
 
-#define Log(A) std::cout<<#A<<std::endl;
 
 static void error_callback(int error, const char* description)
 {
@@ -19,34 +20,19 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 
-	switch (key) {
-	case GLFW_KEY_W:
-		Log(w);
-		break;
-	case GLFW_KEY_S:
-		Log(s);
-		break;
-	case GLFW_KEY_A:
-		Log(a);
-		break;
-	case GLFW_KEY_D:
-		Log(d);
-		break;
-	default:
-		break;
-	}
+	if (action == GLFW_RELEASE)
+		scene.key_up(key);
 }
 
 //mouse position event;
 static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
-
+	scene.cursor_position_update(xpos, ypos);
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
-		Log(Right_Button_Click);
+	scene.mouse_button_clicked(button, mods);
 }
 
 int main(void)
@@ -54,6 +40,9 @@ int main(void)
 	GLFWwindow* window;
 	GLint mvp_location, vpos_location, vcol_location;
 	ShaderManger simpleShader;
+
+	int width = 640;
+	int height = 480;
 
 	glfwSetErrorCallback(error_callback);
 
@@ -63,12 +52,16 @@ int main(void)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
-	window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
+	window = glfwCreateWindow(width, height, "Simple example", NULL, NULL);
+	scene.SetSceneSize(width, height);
+	scene.SetWindow(window);
+
 	if (!window)
 	{
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
+	scene.start();
 
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, cursor_position_callback);
@@ -104,6 +97,7 @@ int main(void)
 
 	while (!glfwWindowShouldClose(window))
 	{
+		scene.update();
 		//check fps
 		frameCount++;
 		float newTime = static_cast<float>(glfwGetTime());
@@ -117,10 +111,10 @@ int main(void)
 		}
 
 		float ratio;
-		int width, height;
+		//int width, height;
 		mat4x4 m, p, mvp;
 
-		glfwGetFramebufferSize(window, &width, &height);
+		//glfwGetFramebufferSize(window, &width, &height);
 		ratio = width / (float)height;
 
 		glViewport(0, 0, width, height);
@@ -143,6 +137,7 @@ int main(void)
 	}
 
 	glfwDestroyWindow(window);
+	scene.destroy();
 
 	glfwTerminate();
 	exit(EXIT_SUCCESS);
