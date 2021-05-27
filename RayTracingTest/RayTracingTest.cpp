@@ -6,7 +6,6 @@
 #include "Camera.h"
 #include <glm/gtc/type_ptr.hpp>
 #include "Scene.h"
-#include "RayTracingTest.h"
 
 
 static void error_callback(int error, const char* description)
@@ -31,15 +30,13 @@ int main(void)
 
 	window = glfwCreateWindow(width, height, "Simple example", NULL, NULL);
 
-	scene.SetSceneSize(width, height);
-	scene.SetWindow(window);
+	Scene scene(window, width, height);
 
 	if (!window)
 	{
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
-
 
 	glfwMakeContextCurrent(window);
 	gladLoadGL(glfwGetProcAddress);

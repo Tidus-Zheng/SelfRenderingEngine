@@ -5,6 +5,8 @@
 
 void Scene::start()
 {
+	camera.SetResulution(width, height);
+
 	simpleShader.init("vertex.vs", "fragment.fs");
 
 	mvp_location = simpleShader.GetUniformLocation("MVP");
@@ -28,51 +30,48 @@ void Scene::start()
 
 void Scene::update()
 {
-	float ratio;
-	//int width, height;
 	mat4x4 m, p, mvp;
 
 	//glfwGetFramebufferSize(window, &width, &height);
-	ratio = width / (float)height;
 
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	Camera perspecCamera(width, height);
 
 	mat4x4_identity(m);
 	mat4x4_rotate_Z(m, m, (float)glfwGetTime());
 
-	perspecCamera.GetMVPMatrix(mvp);
+	camera.GetMVPMatrix(mvp);
 	mat4x4_mul(mvp, mvp, m);
 
 	simpleShader.UseProgram();
 	glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat*)mvp);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
-
 }
 
 void Scene::destroy()
 {
 }
 
-void Scene::key_up(int key)
+void Scene::keybord_event(int action, int key)
 {
-	switch (key) {
-	case GLFW_KEY_W:
-		Log(w);
-		break;
-	case GLFW_KEY_S:
-		Log(s);
-		break;
-	case GLFW_KEY_A:
-		Log(a);
-		break;
-	case GLFW_KEY_D:
-		Log(d);
-		break;
-	default:
-		break;
+	if (action == GLFW_REPEAT) {
+		switch (key) {
+		case GLFW_KEY_W:
+			camera.UpdatePosition(glm::vec3(0.f, 0.f, -0.1f));
+			break;
+		case GLFW_KEY_S:
+			camera.UpdatePosition(glm::vec3(0.f, 0.f, 0.1f));
+			break;
+		case GLFW_KEY_A:
+			camera.UpdatePosition(glm::vec3(-0.1f, 0.f, 0.f));
+			break;
+		case GLFW_KEY_D:
+			camera.UpdatePosition(glm::vec3(0.1f, 0.f, 0.f));
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -82,6 +81,10 @@ void Scene::cursor_position_update(double xpos, double ypos)
 
 void Scene::mouse_button_clicked(int button, int mods)
 {
-	if (button == GLFW_MOUSE_BUTTON_RIGHT)
+	if (button == GLFW_MOUSE_BUTTON_RIGHT) {
 		Log(Right_Button_Click);
+	}
+	else if (button == GLFW_MOUSE_BUTTON_LEFT) {
+		Log(Left_Button_Click);
+	}
 }

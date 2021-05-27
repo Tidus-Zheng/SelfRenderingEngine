@@ -1,5 +1,6 @@
 #pragma once
 #include "Utility.h"
+#include "ShaderManager.h"
 #include <vector>
 
 class Object {
@@ -8,6 +9,9 @@ public:
 	std::vector<glm::vec3> vertices, colors, triangles, normal;
 	std::vector<glm::vec2> uvs;
 	glm::vec3 position, rotation, scale;
+	mat4x4 matrix;
+
+	ShaderManger simpleShader;
 
 	Object() {
 		scale = glm::vec3(1, 1, 1);
@@ -29,6 +33,8 @@ public:
 	void AttibuteValue(GLint location, std::vector<glm::vec3> values);
 	void AttributeVertices(GLint location);
 	void AttributeColors(GLint location);
+
+	void Render();
 
 	~Object() {
 
