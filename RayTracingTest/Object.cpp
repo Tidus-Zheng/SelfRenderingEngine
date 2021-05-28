@@ -12,14 +12,14 @@ void Object::AttibuteValue(GLint location, std::vector<glm::vec3> values)
 	glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
 }
 
-void Object::AttributeVertices(GLint location)
+void Object::AttributeVertices(ShaderManger* shader, std::string attribute)
 {
-	AttibuteValue(location, vertices);
+	AttibuteValue(shader->GetAttribLocation(attribute), vertices);
 }
 
-void Object::AttributeColors(GLint location)
+void Object::AttributeColors(ShaderManger* shader, std::string attribute)
 {
-	AttibuteValue(location, colors);
+	AttibuteValue(shader->GetAttribLocation(attribute), colors);
 }
 
 void Object::Render()
@@ -27,11 +27,9 @@ void Object::Render()
 	GLint mvp_location, vpos_location, vcol_location;
 
 	mvp_location = simpleShader.GetUniformLocation("MVP");
-	vpos_location = simpleShader.GetAttribLocation("vPos");
-	vcol_location = simpleShader.GetAttribLocation("vCol");
 
-	AttributeVertices(vpos_location);
-	AttributeColors(vcol_location);
+	AttributeVertices(&simpleShader, "vPos");
+	AttributeColors(&simpleShader, "vCol");
 
 	//mat4x4_identity(matrix);
 	//mat4x4_rotate_Z(matrix, matrix, (float)glfwGetTime());

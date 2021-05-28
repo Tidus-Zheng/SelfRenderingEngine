@@ -31,8 +31,8 @@ public:
 	}
 
 	void AttibuteValue(GLint location, std::vector<glm::vec3> values);
-	void AttributeVertices(GLint location);
-	void AttributeColors(GLint location);
+	void AttributeVertices(ShaderManger* shader, std::string attribute);
+	void AttributeColors(ShaderManger* shader, std::string attribute);
 
 	void Render();
 

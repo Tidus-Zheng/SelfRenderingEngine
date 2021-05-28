@@ -37,14 +37,13 @@ private:
 
 		glfwSetKeyCallback(window, key_callback);
 		glfwSetCursorPosCallback(window, cursor_position_callback);
-		glfwSetMouseButtonCallback(window, mouse_button_callback);
+		//glfwSetMouseButtonCallback(window, mouse_button_callback);
 	}
 
 public:
 	Camera camera;
 	ShaderManger simpleShader;
-	GLint mvp_location, vpos_location, vcol_location;
-
+	
 	Scene() {
 
 	}

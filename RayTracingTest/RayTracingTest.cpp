@@ -27,6 +27,9 @@ int main(void)
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+	//enable depth buffer
+	//glfwWindowHint(GLFW_DEPTH_BITS, GL_TRUE);
+
 
 	window = glfwCreateWindow(width, height, "Simple example", NULL, NULL);
 
