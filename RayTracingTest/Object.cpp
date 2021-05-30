@@ -38,3 +38,12 @@ void Object::Render()
 	//mat4x4_mul(mvp, mvp, m);
 
 }
+
+void Object::Draw()
+{
+
+
+	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+}
+
+

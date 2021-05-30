@@ -6,7 +6,7 @@
 void Scene::start()
 {
 	camera.SetResulution(width, height);
-
+	orbitControl.SetCamera(&camera);
 	simpleShader.init("vertex.vs", "fragment.fs");
 
 	//create object and pass to vertex buffer
@@ -19,14 +19,18 @@ void Scene::start()
 	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
 	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
 
-	Object triangle(triVer, triCol);
+	triangle.SetVertices(triVer);
+	triangle.SetColors(triCol);
+
 	triangle.AttributeVertices(&simpleShader, "vPos");
 	triangle.AttributeColors(&simpleShader, "vCol");
+
+	triangle.position.z = -2;
 }
 
 void Scene::update()
 {
-	mat4x4 m, p, mvp;
+	mat4x4 model, view, proj;
 
 	//glfwGetFramebufferSize(window, &width, &height);
 
@@ -35,16 +39,17 @@ void Scene::update()
 	//back face culling
 	glEnable(GL_CULL_FACE);
 
-	mat4x4_identity(m);
-	mat4x4_rotate_Z(m, m, (float)glfwGetTime());
-	//mat4x4_rotate_Y(m, m, (float)glfwGetTime());
+	triangle.rotation.z = (float)glfwGetTime();
 
-	camera.GetMVPMatrix(mvp);
-	mat4x4_mul(mvp, mvp, m);
+	triangle.GetModelMatrix(model);
+	camera.GetViewMatrix(view);
+	camera.GetProjMatrix(proj);
 
 	simpleShader.UseProgram();
-	glUniformMatrix4fv(simpleShader.GetUniformLocation("MVP"), 1, GL_FALSE, (const GLfloat*)mvp);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glUniformMatrix4fv(simpleShader.GetUniformLocation("model"), 1, GL_FALSE, (const GLfloat*)model);
+	glUniformMatrix4fv(simpleShader.GetUniformLocation("view"), 1, GL_FALSE, (const GLfloat*)view);
+	glUniformMatrix4fv(simpleShader.GetUniformLocation("proj"), 1, GL_FALSE, (const GLfloat*)proj);
+	triangle.Draw();
 }
 
 void Scene::destroy()
@@ -56,16 +61,16 @@ void Scene::keybord_event(int action, int key)
 	if (action == GLFW_REPEAT) {
 		switch (key) {
 		case GLFW_KEY_W:
-			camera.UpdatePosition(glm::vec3(0.f, 0.f, -0.1f));
+			orbitControl.Move(glm::vec3(0.f, 0.f, -1.1f));
 			break;
 		case GLFW_KEY_S:
-			camera.UpdatePosition(glm::vec3(0.f, 0.f, 0.1f));
+			orbitControl.Move(glm::vec3(0.f, 0.f, 1.1f));
 			break;
 		case GLFW_KEY_A:
-			camera.UpdatePosition(glm::vec3(-0.1f, 0.f, 0.f));
+			orbitControl.Move(glm::vec3(-1.1f, 0.f, 0.f));
 			break;
 		case GLFW_KEY_D:
-			camera.UpdatePosition(glm::vec3(0.1f, 0.f, 0.f));
+			orbitControl.Move(glm::vec3(1.1f, 0.f, 0.f));
 			break;
 		default:
 			break;

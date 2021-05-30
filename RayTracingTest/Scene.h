@@ -4,6 +4,7 @@
 #include "ShaderManager.h"
 #include "Object.h"
 #include "Camera.h"
+#include "CameraOrbitControl.h"
 
 class Scene {
 private:
@@ -43,9 +44,11 @@ private:
 public:
 	Camera camera;
 	ShaderManger simpleShader;
-	
-	Scene() {
+	Object triangle;
+	CameraOrbitControl orbitControl;
 
+	Scene() {
+		
 	}
 
 	Scene(GLFWwindow* _window, int _width, int _height)
