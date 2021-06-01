@@ -11,6 +11,8 @@ private:
 	int width, height;
 	GLFWwindow* window;
 	std::vector<Object> objects;
+	bool firstClick = true;
+	double firstX, firstY;
 
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
@@ -38,7 +40,6 @@ private:
 
 		glfwSetKeyCallback(window, key_callback);
 		glfwSetCursorPosCallback(window, cursor_position_callback);
-		//glfwSetMouseButtonCallback(window, mouse_button_callback);
 	}
 
 public:
@@ -67,8 +68,6 @@ public:
 
 		SetInputEvent();
 	}
-
-	//keybord event
 
 	GLFWwindow* GetWindow() { return window; }
 

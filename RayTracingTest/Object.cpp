@@ -42,7 +42,6 @@ void Object::Render()
 void Object::Draw()
 {
 
-
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 }
 

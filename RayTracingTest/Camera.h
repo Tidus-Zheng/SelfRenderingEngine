@@ -12,8 +12,8 @@ private:
 public:
 	Camera() {
 		up = glm::vec3(0.f, 1.f, 0.f);
-		position = glm::vec3(0.f, 0.f, 1.f);
-		lookAt = glm::vec3(0.f, 0.f, 0.f);
+		position = glm::vec3(1.f, 1.f, 1.f);
+		lookAt = glm::vec3(0.f, 0.f, 0.5f);
 
 		near = 0.1f;
 		far = 1000.f;

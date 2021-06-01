@@ -15,3 +15,16 @@ void CameraOrbitControl::Move(glm::vec3 offset)
 	glm::vec3 newPosition = lookAt + offset + armDir * armLength;
 	camera->SetPosition(newPosition);
 }
+
+void CameraOrbitControl::Rotate(double offsetX, double offsetY)
+{
+	glm::vec3 lookAt = camera->GetLookAt();
+
+	double sensitivity = 0.001;
+	armDir.x += offsetX * sensitivity;
+	armDir.y -= offsetY * sensitivity;
+
+	camera->SetPosition(lookAt + glm::normalize(armDir) * armLength);
+}
+
+

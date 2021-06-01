@@ -43,7 +43,7 @@ int main(void)
 
 	glfwMakeContextCurrent(window);
 	gladLoadGL(glfwGetProcAddress);
-	glfwSwapInterval(0); //1: 60fps, 0:unlimit
+	glfwSwapInterval(1); //1: 60fps, 0:unlimit
 
 	scene.start();
 

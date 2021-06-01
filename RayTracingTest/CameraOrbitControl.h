@@ -25,4 +25,5 @@ public:
 
 	void SetCamera(Camera* _camera);
 	void Move(glm::vec3 offset);
+	void Rotate(double offsetX, double offsetY);
 };
