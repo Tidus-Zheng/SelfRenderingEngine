@@ -10,15 +10,99 @@ void Scene::start()
 	orbitControl.SetCamera(&camera);
 	simpleShader.init("vertex.vs", "fragment.fs");
 
-	//create object and pass to vertex buffer
+	//create object and pass to vertex buffer (CCW)
 	std::vector<glm::vec3> triVer, triCol;
-	triVer.push_back(glm::vec3(-0.6f, -0.4f, 0.f));
-	triVer.push_back(glm::vec3(0.6f, -0.4f, 0.f));
-	triVer.push_back(glm::vec3(0.f, 0.6f, 0.f));
+	//front 
+	triVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
+	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
+	triVer.push_back(glm::vec3(1.f, -1.f, 1.f));
 
+	triVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
+	triVer.push_back(glm::vec3(1.f, -1.f, 1.f));
+	triVer.push_back(glm::vec3(1.f, 1.f, 1.f));
+	//right
+	triVer.push_back(glm::vec3(1.f, 1.f, 1.f));
+	triVer.push_back(glm::vec3(1.f, -1.f, 1.f));
+	triVer.push_back(glm::vec3(1.f, -1.f, -1.f));
+
+	triVer.push_back(glm::vec3(1.f, 1.f, 1.f));
+	triVer.push_back(glm::vec3(1.f, -1.f, -1.f));
+	triVer.push_back(glm::vec3(1.f, 1.f, -1.f));
+	//back
+	triVer.push_back(glm::vec3(1.f, 1.f, -1.f));
+	triVer.push_back(glm::vec3(1.f, -1.f, -1.f));
+	triVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
+
+	triVer.push_back(glm::vec3(1.f, 1.f, -1.f));
+	triVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
+	triVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
+	//left
+	triVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
+	triVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
+	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
+
+	triVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
+	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
+	triVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
+	//top
+	triVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
+	triVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
+	triVer.push_back(glm::vec3(1.f, 1.f, 1.f));
+
+	triVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
+	triVer.push_back(glm::vec3(1.f, 1.f, 1.f));
+	triVer.push_back(glm::vec3(1.f, 1.f, -1.f));
+	//bottom
+	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
+	triVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
+	triVer.push_back(glm::vec3(1.f, -1.f, -1.f));
+
+	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
+	triVer.push_back(glm::vec3(1.f, -1.f, -1.f));
+	triVer.push_back(glm::vec3(1.f, -1.f, 1.f));
+
+	//front red
 	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	//right green
 	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	//back blue
 	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	//left cyan
+	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	//top yellow
+	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	//bottom magenta
+	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
+	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
+	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
+	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
+	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
+	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
 
 	triangle.SetVertices(triVer);
 	triangle.SetColors(triCol);
@@ -38,8 +122,9 @@ void Scene::update()
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//back face culling
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 
+	triangle.rotation.y = (float)glfwGetTime() / 2;
 	triangle.rotation.z = (float)glfwGetTime();
 
 	triangle.GetModelMatrix(model);
