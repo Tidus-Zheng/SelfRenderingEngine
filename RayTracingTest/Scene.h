@@ -34,12 +34,18 @@ private:
 		static_cast<Scene*>(glfwGetWindowUserPointer(window))->mouse_button_clicked(button, mods);
 	}
 
+	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+	{
+		static_cast<Scene*>(glfwGetWindowUserPointer(window))->wheel_update(yoffset);
+	}
+
 	void SetInputEvent() {
 		//set window pointer before get in input event
 		glfwSetWindowUserPointer(window, this);
 
 		glfwSetKeyCallback(window, key_callback);
 		glfwSetCursorPosCallback(window, cursor_position_callback);
+		glfwSetScrollCallback(window, scroll_callback);
 	}
 
 public:
@@ -77,5 +83,6 @@ public:
 	void keybord_event(int action, int key);
 	void cursor_position_update(double xpos, double ypos);
 	void mouse_button_clicked(int button, int mods);
+	void wheel_update( double offset);
 };
 

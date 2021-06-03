@@ -173,7 +173,6 @@ void Scene::cursor_position_update(double xpos, double ypos)
 {
 	int state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
 
-
 	if (state == GLFW_PRESS)
 	{
 		if (firstClick) {
@@ -185,13 +184,10 @@ void Scene::cursor_position_update(double xpos, double ypos)
 
 		firstX = xpos;
 		firstY = ypos;
-		//upgrade_cow();
-		//std::cout << "left press" << std::endl;
 	}
 
 	if (state == GLFW_RELEASE) {
 		firstClick = true;
-		//std::cout << "left up" << std::endl;
 	}
 }
 
@@ -204,4 +200,9 @@ void Scene::mouse_button_clicked(int button, int mods)
 	else if (button == GLFW_MOUSE_BUTTON_LEFT) {
 		Log(Left_Button_Click);
 	}
+}
+
+void Scene::wheel_update(double offset)
+{
+	orbitControl.ArmLengthUpdate(offset);
 }

@@ -29,9 +29,22 @@ void CameraOrbitControl::Rotate(double offsetX, double offsetY)
 	double sensitivity = 0.1;
 
 	armDir = Vec3RotateX(armDir, glm::radians(offsetY));
+	//to-do:: rotate bug
 	armDir = Vec3RotateY(armDir, glm::radians(offsetX));
 
 	camera->SetPosition(lookAt + glm::normalize(armDir) * armLength);
 }
+
+void CameraOrbitControl::ArmLengthUpdate(double offset)
+{
+	glm::vec3 lookAt = camera->GetLookAt();
+
+	double sensitivity = 0.1;
+	armLength += offset * sensitivity;
+
+	camera->SetPosition(lookAt + glm::normalize(armDir) * armLength);
+}
+
+
 
 
