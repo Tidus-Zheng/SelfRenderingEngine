@@ -47,9 +47,9 @@ public:
 	ShaderManger simpleShader;
 	Object triangle;
 	CameraOrbitControl orbitControl;
-
+	bool showPos = false;
 	Scene() {
-		
+
 	}
 
 	Scene(GLFWwindow* _window, int _width, int _height)

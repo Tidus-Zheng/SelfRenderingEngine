@@ -13,7 +13,7 @@ private:
 public:
 	Camera() {
 		up = glm::vec3(0.f, 1.f, 0.f);
-		position = glm::vec3(10.f, 10.f, 10.f);
+		position = glm::vec3(0.f, 0.f, 10.f);
 		lookAt = glm::vec3(0.f, 0.f, 0.f);
 
 		near = 0.1f;
@@ -37,7 +37,7 @@ public:
 
 	glm::vec3 GetPosition() { return position; }
 	void SetPosition(glm::vec3 _position) { position = _position; }
-	
+
 	glm::vec3 GetLookAt() { return lookAt; }
 	void SetLookAt(glm::vec3 _lookAt) { lookAt = _lookAt; }
 
@@ -45,4 +45,5 @@ public:
 	void GetViewMatrix(mat4x4& view);
 	void GetProjMatrix(mat4x4& proj);
 	void UpdatePosition(glm::vec3 offset);
+	glm::vec3 GetWoldPostionFromView(glm::vec3 pos);
 };

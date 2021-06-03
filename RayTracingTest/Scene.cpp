@@ -109,8 +109,6 @@ void Scene::start()
 
 	triangle.AttributeVertices(&simpleShader, "vPos");
 	triangle.AttributeColors(&simpleShader, "vCol");
-
-	triangle.position.z = -2;
 }
 
 void Scene::update()
@@ -124,14 +122,15 @@ void Scene::update()
 	//back face culling
 	glEnable(GL_CULL_FACE);
 
-	triangle.rotation.y = (float)glfwGetTime() / 2;
-	triangle.rotation.z = (float)glfwGetTime();
+	//triangle.rotation.y = (float)glfwGetTime() / 2;
+	//triangle.rotation.z = (float)glfwGetTime();
 
 	triangle.GetModelMatrix(model);
 	camera.GetViewMatrix(view);
 	camera.GetProjMatrix(proj);
 
 	simpleShader.UseProgram();
+	glUniform1f(simpleShader.GetUniformLocation("isPos"), showPos);
 	glUniformMatrix4fv(simpleShader.GetUniformLocation("model"), 1, GL_FALSE, (const GLfloat*)model);
 	glUniformMatrix4fv(simpleShader.GetUniformLocation("view"), 1, GL_FALSE, (const GLfloat*)view);
 	glUniformMatrix4fv(simpleShader.GetUniformLocation("proj"), 1, GL_FALSE, (const GLfloat*)proj);
@@ -147,19 +146,22 @@ void Scene::keybord_event(int action, int key)
 	if (action == GLFW_REPEAT || action == GLFW_RELEASE) {
 		switch (key) {
 		case GLFW_KEY_W:
-			orbitControl.Move(glm::vec3(0.f, 0.f, -0.1f));
+			orbitControl.Move(glm::vec3(0.f, 0.f, -1.f));
 			break;
 		case GLFW_KEY_S:
-			orbitControl.Move(glm::vec3(0.f, 0.f, 0.1f));
+			orbitControl.Move(glm::vec3(0.f, 0.f, 1.f));
 			break;
 		case GLFW_KEY_A:
-			orbitControl.Move(glm::vec3(-0.1f, 0.f, 0.f));
+			orbitControl.Move(glm::vec3(-1.f, 0.f, 0.f));
 			break;
 		case GLFW_KEY_D:
-			orbitControl.Move(glm::vec3(0.1f, 0.f, 0.f));
+			orbitControl.Move(glm::vec3(1.f, 0.f, 0.f));
+			break;
+		case GLFW_KEY_T:
+			showPos = !showPos;
 			break;
 		case GLFW_KEY_SPACE:
-			orbitControl.Move(glm::vec3(0.0f, 0.1f, 0.0f));
+			orbitControl.Move(glm::vec3(0.0f, 1.f, 0.0f));
 			break;
 		default:
 			break;
