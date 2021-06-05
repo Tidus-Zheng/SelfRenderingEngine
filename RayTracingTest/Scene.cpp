@@ -109,6 +109,13 @@ void Scene::start()
 
 	triangle.AttributeVertices(&simpleShader, "vPos");
 	triangle.AttributeColors(&simpleShader, "vCol");
+
+	cube.SetVertices(triVer);
+	cube.SetColors(triCol);
+
+	cube.AttributeVertices(&simpleShader, "vPos");
+	cube.AttributeColors(&simpleShader, "vCol");
+	cube.position.x = 3;
 }
 
 void Scene::update()
@@ -121,20 +128,25 @@ void Scene::update()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//back face culling
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
 
-	//triangle.rotation.y = (float)glfwGetTime() / 2;
-	//triangle.rotation.z = (float)glfwGetTime();
+	triangle.rotation.y = (float)glfwGetTime() / 2;
+	triangle.rotation.z = (float)glfwGetTime();
 
 	triangle.GetModelMatrix(model);
 	camera.GetViewMatrix(view);
 	camera.GetProjMatrix(proj);
-
-	simpleShader.UseProgram();
-	glUniform1f(simpleShader.GetUniformLocation("isPos"), showPos);
-	glUniformMatrix4fv(simpleShader.GetUniformLocation("model"), 1, GL_FALSE, (const GLfloat*)model);
 	glUniformMatrix4fv(simpleShader.GetUniformLocation("view"), 1, GL_FALSE, (const GLfloat*)view);
 	glUniformMatrix4fv(simpleShader.GetUniformLocation("proj"), 1, GL_FALSE, (const GLfloat*)proj);
+
+	glUniformMatrix4fv(simpleShader.GetUniformLocation("model"), 1, GL_FALSE, (const GLfloat*)model);
+	simpleShader.UseProgram();
 	triangle.Draw();
+
+	cube.GetModelMatrix(model);
+	glUniformMatrix4fv(simpleShader.GetUniformLocation("model"), 1, GL_FALSE, (const GLfloat*)model);
+
+	cube.Draw();
 }
 
 void Scene::destroy()
@@ -204,5 +216,5 @@ void Scene::mouse_button_clicked(int button, int mods)
 
 void Scene::wheel_update(double offset)
 {
-	orbitControl.ArmLengthUpdate(offset);
+	orbitControl.ArmLengthUpdate(-offset);
 }

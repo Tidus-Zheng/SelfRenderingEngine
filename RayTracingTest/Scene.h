@@ -51,7 +51,7 @@ private:
 public:
 	Camera camera;
 	ShaderManger simpleShader;
-	Object triangle;
+	Object triangle, cube;
 	CameraOrbitControl orbitControl;
 	bool showPos = false;
 	Scene() {

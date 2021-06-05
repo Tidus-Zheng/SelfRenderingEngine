@@ -41,6 +41,10 @@ void Object::Render()
 
 void Object::Draw()
 {
+	GLuint buffer;
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 }

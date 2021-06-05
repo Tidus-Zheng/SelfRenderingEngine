@@ -5,12 +5,13 @@
 
 class Object {
 private:
+	GLint vertexArray;
+
 public:
 	std::vector<glm::vec3> vertices, colors, triangles, normal;
 	std::vector<glm::vec2> uvs;
 	glm::vec3 position, rotation, scale;
 	mat4x4 matrix;
-
 	ShaderManger simpleShader;
 
 	Object() {
