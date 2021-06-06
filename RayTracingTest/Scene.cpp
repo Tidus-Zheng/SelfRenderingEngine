@@ -6,116 +6,121 @@
 void Scene::start()
 {
 	camera.SetResulution(width, height);
-	//camera.SetPosition(glm::vec3(1, 1, 1));
 	orbitControl.SetCamera(&camera);
-	simpleShader.init("vertex.vs", "fragment.fs");
 
 	//create object and pass to vertex buffer (CCW)
-	std::vector<glm::vec3> triVer, triCol;
+	std::vector<glm::vec3> cubeVer, cubeCol;
 	//front 
-	triVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
-	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
-	triVer.push_back(glm::vec3(1.f, -1.f, 1.f));
+	cubeVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
+	cubeVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
+	cubeVer.push_back(glm::vec3(1.f, -1.f, 1.f));
 
-	triVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
-	triVer.push_back(glm::vec3(1.f, -1.f, 1.f));
-	triVer.push_back(glm::vec3(1.f, 1.f, 1.f));
+	cubeVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
+	cubeVer.push_back(glm::vec3(1.f, -1.f, 1.f));
+	cubeVer.push_back(glm::vec3(1.f, 1.f, 1.f));
 	//right
-	triVer.push_back(glm::vec3(1.f, 1.f, 1.f));
-	triVer.push_back(glm::vec3(1.f, -1.f, 1.f));
-	triVer.push_back(glm::vec3(1.f, -1.f, -1.f));
+	cubeVer.push_back(glm::vec3(1.f, 1.f, 1.f));
+	cubeVer.push_back(glm::vec3(1.f, -1.f, 1.f));
+	cubeVer.push_back(glm::vec3(1.f, -1.f, -1.f));
 
-	triVer.push_back(glm::vec3(1.f, 1.f, 1.f));
-	triVer.push_back(glm::vec3(1.f, -1.f, -1.f));
-	triVer.push_back(glm::vec3(1.f, 1.f, -1.f));
+	cubeVer.push_back(glm::vec3(1.f, 1.f, 1.f));
+	cubeVer.push_back(glm::vec3(1.f, -1.f, -1.f));
+	cubeVer.push_back(glm::vec3(1.f, 1.f, -1.f));
 	//back
-	triVer.push_back(glm::vec3(1.f, 1.f, -1.f));
-	triVer.push_back(glm::vec3(1.f, -1.f, -1.f));
-	triVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
+	cubeVer.push_back(glm::vec3(1.f, 1.f, -1.f));
+	cubeVer.push_back(glm::vec3(1.f, -1.f, -1.f));
+	cubeVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
 
-	triVer.push_back(glm::vec3(1.f, 1.f, -1.f));
-	triVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
-	triVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
+	cubeVer.push_back(glm::vec3(1.f, 1.f, -1.f));
+	cubeVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
+	cubeVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
 	//left
-	triVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
-	triVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
-	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
+	cubeVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
+	cubeVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
+	cubeVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
 
-	triVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
-	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
-	triVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
+	cubeVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
+	cubeVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
+	cubeVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
 	//top
-	triVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
-	triVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
-	triVer.push_back(glm::vec3(1.f, 1.f, 1.f));
+	cubeVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
+	cubeVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
+	cubeVer.push_back(glm::vec3(1.f, 1.f, 1.f));
 
-	triVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
-	triVer.push_back(glm::vec3(1.f, 1.f, 1.f));
-	triVer.push_back(glm::vec3(1.f, 1.f, -1.f));
+	cubeVer.push_back(glm::vec3(-1.f, 1.f, -1.f));
+	cubeVer.push_back(glm::vec3(1.f, 1.f, 1.f));
+	cubeVer.push_back(glm::vec3(1.f, 1.f, -1.f));
 	//bottom
-	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
-	triVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
-	triVer.push_back(glm::vec3(1.f, -1.f, -1.f));
+	cubeVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
+	cubeVer.push_back(glm::vec3(-1.f, -1.f, -1.f));
+	cubeVer.push_back(glm::vec3(1.f, -1.f, -1.f));
 
-	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
-	triVer.push_back(glm::vec3(1.f, -1.f, -1.f));
-	triVer.push_back(glm::vec3(1.f, -1.f, 1.f));
+	cubeVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
+	cubeVer.push_back(glm::vec3(1.f, -1.f, -1.f));
+	cubeVer.push_back(glm::vec3(1.f, -1.f, 1.f));
 
 	//front red
-	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
-	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
-	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
-	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
-	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
-	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 0.f));
 	//right green
-	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
-	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
-	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
-	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
-	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
-	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 0.f));
 	//back blue
-	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
-	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
-	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
-	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
-	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
-	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 0.f, 1.f));
 	//left cyan
-	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
-	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
-	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
-	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
-	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
-	triCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 1.f));
+	cubeCol.push_back(glm::vec3(0.f, 1.f, 1.f));
 	//top yellow
-	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
-	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
-	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
-	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
-	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
-	triCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 1.f, 0.f));
+	cubeCol.push_back(glm::vec3(1.f, 1.f, 0.f));
 	//bottom magenta
-	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
-	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
-	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
-	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
-	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
-	triCol.push_back(glm::vec3(1.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 1.f));
+	cubeCol.push_back(glm::vec3(1.f, 0.f, 1.f));
 
+	cube.InitShader();
+	cube.SetVertices(cubeVer);
+	cube.SetColors(cubeCol);
+
+	cube.position.x = 1;
+
+	std::vector<glm::vec3> triVer, triCol;
+	triVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
+	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
+	triVer.push_back(glm::vec3(1.f, -1.f, 1.f));
+
+	triCol.push_back(glm::vec3(1.f, 0.f, 0.f));
+	triCol.push_back(glm::vec3(0.f, 1.f, 0.f));
+	triCol.push_back(glm::vec3(0.f, 0.f, 1.f));
+
+	triangle.InitShader();
 	triangle.SetVertices(triVer);
 	triangle.SetColors(triCol);
-
-	triangle.AttributeVertices(&simpleShader, "vPos");
-	triangle.AttributeColors(&simpleShader, "vCol");
-
-	cube.SetVertices(triVer);
-	cube.SetColors(triCol);
-
-	cube.AttributeVertices(&simpleShader, "vPos");
-	cube.AttributeColors(&simpleShader, "vCol");
-	cube.position.x = 3;
+	triangle.position.x = -1;
 }
 
 void Scene::update()
@@ -130,23 +135,13 @@ void Scene::update()
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 
-	triangle.rotation.y = (float)glfwGetTime() / 2;
-	triangle.rotation.z = (float)glfwGetTime();
+	cube.rotation.x = glfwGetTime();
+	cube.rotation.z = glfwGetTime()/2;
 
-	triangle.GetModelMatrix(model);
-	camera.GetViewMatrix(view);
-	camera.GetProjMatrix(proj);
-	glUniformMatrix4fv(simpleShader.GetUniformLocation("view"), 1, GL_FALSE, (const GLfloat*)view);
-	glUniformMatrix4fv(simpleShader.GetUniformLocation("proj"), 1, GL_FALSE, (const GLfloat*)proj);
+	cube.Render(&camera);
 
-	glUniformMatrix4fv(simpleShader.GetUniformLocation("model"), 1, GL_FALSE, (const GLfloat*)model);
-	simpleShader.UseProgram();
-	triangle.Draw();
-
-	cube.GetModelMatrix(model);
-	glUniformMatrix4fv(simpleShader.GetUniformLocation("model"), 1, GL_FALSE, (const GLfloat*)model);
-
-	cube.Draw();
+	triangle.rotation.z = glfwGetTime();
+	triangle.Render(&camera);
 }
 
 void Scene::destroy()

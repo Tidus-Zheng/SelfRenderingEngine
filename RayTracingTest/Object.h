@@ -1,12 +1,13 @@
 #pragma once
 #include "Utility.h"
 #include "ShaderManager.h"
+#include "Camera.h"
 #include <vector>
 
 class Object {
 private:
-	GLint vertexArray;
-
+	GLint vao;
+	GLuint vertexBuffer, colorBuffer;
 public:
 	std::vector<glm::vec3> vertices, colors, triangles, normal;
 	std::vector<glm::vec2> uvs;
@@ -50,12 +51,13 @@ public:
 		mat4x4_rotate_Z(model, model, rotation.z);
 	}
 
-	void AttibuteValue(GLint location, std::vector<glm::vec3> values);
+	void AttibuteValue(GLuint* buffer, GLint location, std::vector<glm::vec3> values);
 	void AttributeVertices(ShaderManger* shader, std::string attribute);
 	void AttributeColors(ShaderManger* shader, std::string attribute);
+	void InitShader() { simpleShader.init("vertex.vs", "fragment.fs"); }
 
 	// to-do: merged into one function
-	void Render();
+	void Render(Camera* camera);
 	void Draw();
 
 	~Object() {

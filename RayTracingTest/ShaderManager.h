@@ -19,4 +19,5 @@ public:
 	GLint GetUniformLocation(std::string name);
 	GLint GetAttribLocation(std::string name);
 	void UseProgram();
+	GLint GetProgram() { return program; }
 };
