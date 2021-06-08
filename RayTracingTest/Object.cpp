@@ -41,11 +41,3 @@ void Object::Render(Camera* camera)
 
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 }
-
-void Object::Draw()
-{
-	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-
-}
-
-

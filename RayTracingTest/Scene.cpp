@@ -135,12 +135,11 @@ void Scene::update()
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 
-	cube.rotation.x = glfwGetTime();
-	cube.rotation.z = glfwGetTime()/2;
-
+	//cube.rotation.x = glfwGetTime();
+	//cube.rotation.z = glfwGetTime()/2;
 	cube.Render(&camera);
 
-	triangle.rotation.z = glfwGetTime();
+	//triangle.rotation.z = glfwGetTime();
 	triangle.Render(&camera);
 }
 

@@ -56,9 +56,7 @@ public:
 	void AttributeColors(ShaderManger* shader, std::string attribute);
 	void InitShader() { simpleShader.init("vertex.vs", "fragment.fs"); }
 
-	// to-do: merged into one function
 	void Render(Camera* camera);
-	void Draw();
 
 	~Object() {
 

@@ -1,4 +1,5 @@
 #include "CameraOrbitControl.h"
+#define Log(vec3) std::cout<<glm::to_string(vec3)<<std::endl;
 
 void CameraOrbitControl::SetCamera(Camera* _camera)
 {
@@ -27,11 +28,26 @@ void CameraOrbitControl::Rotate(double offsetX, double offsetY)
 	glm::vec3 lookAt = camera->GetLookAt();
 
 	double sensitivity = 0.1;
+	glm::vec3 projDir = glm::normalize(glm::vec3(armDir.x, 0, armDir.z));// glm::normalize(glm::proj(armDir, glm::vec3(1, 0, 1)));
 
-	armDir = Vec3RotateX(armDir, glm::radians(offsetY));
-	//to-do:: rotate bug
-	armDir = Vec3RotateY(armDir, glm::radians(offsetX));
+	float xAngle = acos(glm::dot(glm::vec3(1, 0, 0), projDir));
+	float yAngle = acos(glm::dot(armDir, projDir));
 
+	if (projDir.z < 0)
+		xAngle = -xAngle;
+
+	if (armDir.y < 0)
+		yAngle = -yAngle;
+
+	//yAngle = std::min((double)1.57f, yAngle + offsetY * 0.01);
+	//yAngle = std::max((double)-1.57f, yAngle + offsetY * 0.01);
+
+	std::cout << glm::degrees(yAngle) << std::endl;
+	glm::vec3 newDir(1, 0, 1);
+	//newDir = Vec3RotateY(newDir, xAngle);
+	newDir = Vec3RotateX(newDir, yAngle);
+	//Log(glm::normalize(newDir));
+	armDir = glm::normalize(newDir);
 	camera->SetPosition(lookAt + glm::normalize(armDir) * armLength);
 }
 
@@ -44,6 +60,13 @@ void CameraOrbitControl::ArmLengthUpdate(double offset)
 
 	camera->SetPosition(lookAt + glm::normalize(armDir) * armLength);
 }
+
+void CameraOrbitControl::UpdateCameraPosition(glm::vec3 position)
+{
+
+}
+
+
 
 
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Camera.h"
+#include "glm/gtx/projection.hpp"
 
 class CameraOrbitControl {
 private:
@@ -27,6 +28,7 @@ public:
 	void Move(glm::vec3 offset);
 	void Rotate(double offsetX, double offsetY);
 	void ArmLengthUpdate(double offset);
+	void UpdateCameraPosition(glm::vec3 position);
 
 	glm::vec3 Vec3RotateX(glm::vec3 vector, double angle) {
 		glm::mat3x3 rotMat(1, 0, 0, 0, cos(angle), -sin(angle), 0, sin(angle), cos(angle));
