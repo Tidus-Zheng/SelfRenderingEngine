@@ -28,9 +28,9 @@ void CameraOrbitControl::Rotate(double offsetX, double offsetY)
 	glm::vec3 lookAt = camera->GetLookAt();
 
 	double sensitivity = 0.1;
-	glm::vec3 projDir = glm::normalize(glm::vec3(armDir.x, 0, armDir.z));// glm::normalize(glm::proj(armDir, glm::vec3(1, 0, 1)));
+	glm::vec3 projDir = glm::normalize(glm::vec3(armDir.x, 0, armDir.z));
 
-	float xAngle = acos(glm::dot(glm::vec3(1, 0, 0), projDir));
+	float xAngle = acos(glm::dot(baseVector, projDir));
 	float yAngle = acos(glm::dot(armDir, projDir));
 
 	if (projDir.z < 0)
@@ -39,16 +39,17 @@ void CameraOrbitControl::Rotate(double offsetX, double offsetY)
 	if (armDir.y < 0)
 		yAngle = -yAngle;
 
-	//yAngle = std::min((double)1.57f, yAngle + offsetY * 0.01);
-	//yAngle = std::max((double)-1.57f, yAngle + offsetY * 0.01);
+	xAngle += offsetX * 0.01;
+	yAngle += offsetY * 0.01;
 
-	std::cout << glm::degrees(yAngle) << std::endl;
-	glm::vec3 newDir(1, 0, 1);
-	//newDir = Vec3RotateY(newDir, xAngle);
-	newDir = Vec3RotateX(newDir, yAngle);
-	//Log(glm::normalize(newDir));
+	yAngle = std::min(glm::half_pi<float>(), yAngle);
+	yAngle = std::max(-glm::half_pi<float>(), yAngle);
+	glm::vec3 newDir(baseVector);
+	newDir = Vec3RotateZ(newDir, -yAngle);
+	newDir = Vec3RotateY(newDir, xAngle);
+
 	armDir = glm::normalize(newDir);
-	camera->SetPosition(lookAt + glm::normalize(armDir) * armLength);
+	camera->SetPosition(lookAt + armDir * armLength);
 }
 
 void CameraOrbitControl::ArmLengthUpdate(double offset)

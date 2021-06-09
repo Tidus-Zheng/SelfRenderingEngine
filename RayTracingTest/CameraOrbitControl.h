@@ -8,6 +8,7 @@ private:
 	Camera* camera;
 	float armLength = 1;
 	glm::vec3 armDir = glm::vec3(0, 0, 1);
+	glm::vec3 baseVector = glm::vec3(1, 0, 0);
 
 public:
 	CameraOrbitControl() {

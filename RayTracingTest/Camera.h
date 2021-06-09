@@ -13,7 +13,7 @@ private:
 public:
 	Camera() {
 		up = glm::vec3(0.f, 1.f, 0.f);
-		position = glm::vec3(10.f, 10.f, 10.f);
+		position = glm::vec3(10.f,10.f, 10.f);
 		lookAt = glm::vec3(0.f, 0.f, 0.f);
 
 		near = 0.1f;
