@@ -2,13 +2,18 @@
 #include "Utility.h"
 #include "ShaderManager.h"
 #include "Camera.h"
+#include "stb_image.h"
 #include <vector>
 
 class Object {
 private:
-	GLint vao;
+	unsigned int VBO, EBO;
 	GLuint vertexBuffer, colorBuffer;
 public:
+	//std::vector<Vertex> vertices;
+	std::vector<unsigned int> indices;
+	//std::vector<Texture> textures;
+
 	std::vector<glm::vec3> vertices, colors, triangles, normal;
 	std::vector<glm::vec2> uvs;
 	glm::vec3 position, rotation, scale;
@@ -49,6 +54,10 @@ public:
 		mat4x4_rotate_X(model, model, rotation.x);
 		mat4x4_rotate_Y(model, model, rotation.y);
 		mat4x4_rotate_Z(model, model, rotation.z);
+	}
+
+	void LoadTexture() {
+
 	}
 
 	void AttibuteValue(GLuint* buffer, GLint location, std::vector<glm::vec3> values);

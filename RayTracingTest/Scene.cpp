@@ -5,6 +5,7 @@
 
 void Scene::start()
 {
+	simpleShader.init("vertex.vs", "fragment.fs");
 	camera.SetResulution(width, height);
 	orbitControl.SetCamera(&camera);
 
@@ -109,7 +110,7 @@ void Scene::start()
 	cube.position.x = 1;
 
 	std::vector<glm::vec3> triVer, triCol;
-	triVer.push_back(glm::vec3(-1.f, 1.f, 1.f));
+	triVer.push_back(glm::vec3(0.f, 1.f, 1.f));
 	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
 	triVer.push_back(glm::vec3(1.f, -1.f, 1.f));
 
@@ -121,12 +122,36 @@ void Scene::start()
 	triangle.SetVertices(triVer);
 	triangle.SetColors(triCol);
 	triangle.position.x = -1;
+
+	std::vector<Vertex> vertices;
+	std::vector<GLuint> indices = { 0,1,2 };
+	Vertex v1;
+	v1.position = glm::vec3(-1.f, 1.f, 0.f);
+	v1.normal = glm::vec3(0.f, 0.f, 1.f);
+	v1.uv = glm::vec2(0.5f, 0.f);
+	vertices.push_back(v1);
+
+	Vertex v2;
+	v2.position = glm::vec3(-1.f, -1.f, 0.f);
+	v2.normal = glm::vec3(0.f, 0.f, 1.f);
+	v2.uv = glm::vec2(0.f, 1.f);
+	vertices.push_back(v2);
+
+	Vertex v3;
+	v2.position = glm::vec3(1.f, -1.f, 0.f);
+	v2.normal = glm::vec3(0.f, 0.f, 1.f);
+	v2.uv = glm::vec2(0.f, 1.f);
+	vertices.push_back(v3);
+
+	string path = "E:/ray tracing/ray-tracing/x64/Debug/image.png";
+	Texture tex(path);
+	tex.type = diffuse;
+	Mesh mesh(vertices, indices, { tex });
+	meshes.push_back(mesh);
 }
 
 void Scene::update()
 {
-	mat4x4 model, view, proj;
-
 	//glfwGetFramebufferSize(window, &width, &height);
 
 	glViewport(0, 0, width, height);
@@ -137,10 +162,22 @@ void Scene::update()
 
 	//cube.rotation.x = glfwGetTime();
 	//cube.rotation.z = glfwGetTime()/2;
-	cube.Render(&camera);
+	//cube.Render(&camera);
 
 	//triangle.rotation.z = glfwGetTime();
-	triangle.Render(&camera);
+	//triangle.Render(&camera);
+	simpleShader.UseProgram();
+	mat4x4 model, view, proj;
+	mat4x4_identity(model);
+	camera.GetViewMatrix(view);
+	camera.GetProjMatrix(proj);
+	glUniformMatrix4fv(simpleShader.GetUniformLocation("model"), 1, GL_FALSE, (const GLfloat*)model);
+	glUniformMatrix4fv(simpleShader.GetUniformLocation("view"), 1, GL_FALSE, (const GLfloat*)view);
+	glUniformMatrix4fv(simpleShader.GetUniformLocation("proj"), 1, GL_FALSE, (const GLfloat*)proj);
+
+	for (int i = 0; i < meshes.size(); i++) {
+		meshes[i].Draw(simpleShader);
+	}
 }
 
 void Scene::destroy()

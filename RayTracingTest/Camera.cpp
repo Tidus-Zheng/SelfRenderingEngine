@@ -21,7 +21,7 @@ void Camera::GetViewMatrix(mat4x4& view)
 	glm::vec3 right = glm::normalize(glm::cross(up, lookDir));
 	glm::vec3 newUp = glm::normalize(glm::cross(lookDir, right));
 	//std::cout << glm::to_string(lookDir) << std::endl;
-
+	
 	mat4x4_look_at(view, &position[0], &lookAt[0], &newUp[0]);
 }
 

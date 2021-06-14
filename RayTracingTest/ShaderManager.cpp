@@ -74,6 +74,21 @@ GLint ShaderManger::GetAttribLocation(std::string name)
 	return glGetAttribLocation(program, name.c_str());
 }
 
+void ShaderManger::setBool(const std::string& name, bool value) const
+{
+	glUniform1i(glGetUniformLocation(program, name.c_str()), (int)value);
+}
+
+void ShaderManger::setInt(const std::string& name, int value) const
+{
+	glUniform1i(glGetUniformLocation(program, name.c_str()), value);
+}
+
+void ShaderManger::setFloat(const std::string& name, float value) const
+{
+	glUniform1f(glGetUniformLocation(program, name.c_str()), value);
+}
+
 void ShaderManger::UseProgram()
 {
 	glUseProgram(program);

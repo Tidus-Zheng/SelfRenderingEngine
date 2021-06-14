@@ -5,6 +5,8 @@
 #include "Object.h"
 #include "Camera.h"
 #include "CameraOrbitControl.h"
+#include "Mesh.h"
+#include "Texture.h"
 
 class Scene {
 private:
@@ -52,6 +54,11 @@ public:
 	Camera camera;
 	Object triangle, cube;
 	CameraOrbitControl orbitControl;
+	ShaderManger simpleShader;
+	vector<Mesh> meshes;
+
+	//Mesh cubeMesh;
+
 	bool showPos = false;
 	Scene() {
 
@@ -82,6 +89,6 @@ public:
 	void keybord_event(int action, int key);
 	void cursor_position_update(double xpos, double ypos);
 	void mouse_button_clicked(int button, int mods);
-	void wheel_update( double offset);
+	void wheel_update(double offset);
 };
 
