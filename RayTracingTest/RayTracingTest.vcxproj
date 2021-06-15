@@ -148,7 +148,6 @@
     <ClCompile Include="CameraOrbitControl.cpp" />
     <ClCompile Include="CameraOrbitControls.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Object.cpp" />
     <ClCompile Include="RayTracingTest.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
@@ -159,7 +158,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraOrbitControl.h" />
     <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Object.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Texture.h" />

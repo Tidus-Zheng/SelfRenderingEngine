@@ -2,7 +2,6 @@
 
 #include "Utility.h"
 #include "ShaderManager.h"
-#include "Object.h"
 #include "Camera.h"
 #include <glm/gtc/type_ptr.hpp>
 #include "Scene.h"

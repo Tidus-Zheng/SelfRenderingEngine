@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "ShaderManager.h"
-#include "Object.h"
 #include "Camera.h"
 #include "CameraOrbitControl.h"
 #include "Mesh.h"
@@ -12,7 +11,6 @@ class Scene {
 private:
 	int width, height;
 	GLFWwindow* window;
-	std::vector<Object> objects;
 	bool firstClick = true;
 	double firstX, firstY;
 
@@ -52,7 +50,6 @@ private:
 
 public:
 	Camera camera;
-	Object triangle, cube;
 	CameraOrbitControl orbitControl;
 	ShaderManger simpleShader;
 	vector<Mesh> meshes;
