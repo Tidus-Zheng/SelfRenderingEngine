@@ -110,7 +110,7 @@ void Scene::start()
 	cube.position.x = 1;
 
 	std::vector<glm::vec3> triVer, triCol;
-	triVer.push_back(glm::vec3(0.f, 1.f, 1.f));
+	triVer.push_back(glm::vec3(1.f, 1.f, 1.f));
 	triVer.push_back(glm::vec3(-1.f, -1.f, 1.f));
 	triVer.push_back(glm::vec3(1.f, -1.f, 1.f));
 
@@ -124,24 +124,42 @@ void Scene::start()
 	triangle.position.x = -1;
 
 	std::vector<Vertex> vertices;
-	std::vector<GLuint> indices = { 0,1,2 };
+	std::vector<GLuint> indices = { 0,1,2 ,3,4,5 };
 	Vertex v1;
-	v1.position = glm::vec3(-1.f, 1.f, 0.f);
+	v1.position = glm::vec3(-1.f, 1.f, 1.f);
 	v1.normal = glm::vec3(0.f, 0.f, 1.f);
-	v1.uv = glm::vec2(0.5f, 0.f);
+	v1.uv = glm::vec2(0.0f, 0.f);
 	vertices.push_back(v1);
 
 	Vertex v2;
-	v2.position = glm::vec3(-1.f, -1.f, 0.f);
+	v2.position = glm::vec3(-1.f, -1.f, 1.f);
 	v2.normal = glm::vec3(0.f, 0.f, 1.f);
 	v2.uv = glm::vec2(0.f, 1.f);
 	vertices.push_back(v2);
 
 	Vertex v3;
-	v2.position = glm::vec3(1.f, -1.f, 0.f);
-	v2.normal = glm::vec3(0.f, 0.f, 1.f);
-	v2.uv = glm::vec2(0.f, 1.f);
+	v3.position = glm::vec3(1.f, -1.f, 1.f);
+	v3.normal = glm::vec3(0.f, 0.f, 1.f);
+	v3.uv = glm::vec2(1.f, 1.f);
 	vertices.push_back(v3);
+
+	Vertex v4;
+	v4.position = glm::vec3(-1.f, 1.f, 1.f);
+	v4.normal = glm::vec3(0.f, 0.f, 1.f);
+	v4.uv = glm::vec2(0.f, 0.f);
+	vertices.push_back(v4);
+
+	Vertex v5;
+	v5.position = glm::vec3(1.f, -1.f, 1.f);
+	v5.normal = glm::vec3(0.f, 0.f, 1.f);
+	v5.uv = glm::vec2(1.f, 1.f);
+	vertices.push_back(v5);
+
+	Vertex v6;
+	v6.position = glm::vec3(1.f, 1.f, 1.f);
+	v6.normal = glm::vec3(0.f, 0.f, 1.f);
+	v6.uv = glm::vec2(1.f, 0.f);
+	vertices.push_back(v6);
 
 	string path = "E:/ray tracing/ray-tracing/x64/Debug/image.png";
 	Texture tex(path);
@@ -153,6 +171,7 @@ void Scene::start()
 void Scene::update()
 {
 	//glfwGetFramebufferSize(window, &width, &height);
+	mat4x4 model, view, proj;
 
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -167,14 +186,12 @@ void Scene::update()
 	//triangle.rotation.z = glfwGetTime();
 	//triangle.Render(&camera);
 	simpleShader.UseProgram();
-	mat4x4 model, view, proj;
 	mat4x4_identity(model);
 	camera.GetViewMatrix(view);
 	camera.GetProjMatrix(proj);
 	glUniformMatrix4fv(simpleShader.GetUniformLocation("model"), 1, GL_FALSE, (const GLfloat*)model);
 	glUniformMatrix4fv(simpleShader.GetUniformLocation("view"), 1, GL_FALSE, (const GLfloat*)view);
 	glUniformMatrix4fv(simpleShader.GetUniformLocation("proj"), 1, GL_FALSE, (const GLfloat*)proj);
-
 	for (int i = 0; i < meshes.size(); i++) {
 		meshes[i].Draw(simpleShader);
 	}
