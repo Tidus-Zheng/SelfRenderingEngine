@@ -15,8 +15,7 @@ out vec2 uv;
 void main() {
     mat4 MVP = proj * view * model;
     pos = vPos;//  (MVP * vec4(vPos.xyz, 1.0)).xyz;
-    vec4 mor = model * vec4(vNormal, 1.0);
-    normal = (mor / mor.w).xyz;
+    normal = normalize(mat3(transpose(inverse(model))) * vNormal);
     uv = vUv;
     gl_Position = MVP * vec4(vPos.xyz, 1.0);
     // color = vCol;

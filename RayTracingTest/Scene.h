@@ -6,6 +6,7 @@
 #include "CameraOrbitControl.h"
 #include "Mesh.h"
 #include "Texture.h"
+#include "DirectionalLight.h"
 
 class Scene {
 private:
@@ -13,6 +14,7 @@ private:
 	GLFWwindow* window;
 	bool firstClick = true;
 	double firstX, firstY;
+	DirectionalLight directionLight;
 
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{

@@ -2,6 +2,7 @@
 
 #include "Utility.h"
 #include "stb_image.h"
+#include <filesystem>
 
 class Texture {
 private:
