@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "DirectionalLight.h"
+#include "Model.h"
 
 class Scene {
 private:
@@ -55,6 +56,7 @@ public:
 	CameraOrbitControl orbitControl;
 	ShaderManger simpleShader;
 	vector<Mesh> meshes;
+	Model model;
 
 	//Mesh cubeMesh;
 

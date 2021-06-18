@@ -1,6 +1,14 @@
 #include "Texture.h"
 
-Texture::Texture(string path)
+void Texture::TextureFromFile(const char* path, const string& directory, bool gamma)
+{
+	string filename = string(path);
+	filename = directory + '/' + filename;
+
+	MakeTextureByPath(filename);
+}
+
+void Texture::MakeTextureByPath(string path)
 {
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);

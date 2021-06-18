@@ -50,6 +50,8 @@ void Scene::start()
 	tex.type = diffuse;
 	Mesh mesh(vertices, indices, { tex });
 	meshes.push_back(mesh);
+
+
 }
 
 void Scene::update()
