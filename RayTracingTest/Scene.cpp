@@ -6,7 +6,7 @@ void Scene::start()
 {
 	simpleShader.init("vertex.vs", "fragment.fs");
 	camera.SetResulution(width, height);
-	camera.SetPosition(glm::vec3(0, 10, 50));
+	camera.SetPosition(glm::vec3(0, 10, 10));
 	camera.SetLookAt(glm::vec3(0, 10, 0));
 	orbitControl.SetCamera(&camera);
 

@@ -4,7 +4,6 @@ void Texture::TextureFromFile(const char* path, const string& directory, bool ga
 {
 	string filename = string(path);
 	filename = directory + '/' + filename;
-	cout << path << endl;
 	MakeTextureByPath(filename);
 }
 
