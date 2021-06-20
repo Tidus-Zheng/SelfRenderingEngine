@@ -88,5 +88,8 @@
     <None Include="shader\vertex.vs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="assimp-vc142-mtd.dll">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

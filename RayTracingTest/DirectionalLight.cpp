@@ -2,5 +2,5 @@
 
 glm::vec3 DirectionalLight::GetDir()
 {
-	return lookAt - position;
+	return position - lookAt;
 }

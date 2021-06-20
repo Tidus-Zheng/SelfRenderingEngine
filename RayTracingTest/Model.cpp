@@ -49,15 +49,15 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			uv.x = mesh->mTextureCoords[0][i].x;
 			uv.y = mesh->mTextureCoords[0][i].y;
 
-			vector.x = mesh->mTangents[i].x;
-			vector.y = mesh->mTangents[i].y;
-			vector.z = mesh->mTangents[i].z;
-			vertex.tangent = vector;
+			//vector.x = mesh->mTangents[i].x;
+			//vector.y = mesh->mTangents[i].y;
+			//vector.z = mesh->mTangents[i].z;
+			//vertex.tangent = vector;
 
-			vector.x = mesh->mBitangents[i].x;
-			vector.y = mesh->mBitangents[i].y;
-			vector.z = mesh->mBitangents[i].z;
-			vertex.bitangent = vector;
+			//vector.x = mesh->mBitangents[i].x;
+			//vector.y = mesh->mBitangents[i].y;
+			//vector.z = mesh->mBitangents[i].z;
+			//vertex.bitangent = vector;
 		}
 		vertex.uv = uv;
 

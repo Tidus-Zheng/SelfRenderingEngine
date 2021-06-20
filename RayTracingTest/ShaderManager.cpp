@@ -1,6 +1,6 @@
 #include "ShaderManager.h"
 
-#define shader_path "E:/ray tracing/ray-tracing/RayTracingTest/shader/"
+#define shader_path "E:/RayTracing/ray-tracing/RayTracingTest/shader/"
 
 std::string ShaderManger::ReadFromFile(const GLchar* pathToFile)
 {

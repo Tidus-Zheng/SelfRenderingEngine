@@ -55,7 +55,7 @@ public:
 	Camera camera;
 	CameraOrbitControl orbitControl;
 	ShaderManger simpleShader;
-	vector<Mesh> meshes;
+
 	Model model;
 
 	//Mesh cubeMesh;
