@@ -1,46 +1,50 @@
-# Prerequisites
-*.d
+build/
+bin64/
+temp/
+*.sdf
+*.suo
+bin/
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
+#Ignore thumbnails created by Windows
+Thumbs.db
+#Ignore files built by Visual Studio
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-
-# Executables
 *.exe
-*.out
-*.app
-.vs
-RayTracingTest/x64/Debug
-x64
-RayTracingTest/model
-  
-CMakeLists.txt.user
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+.vs/
+#Nuget packages folder
+packages/
+
+#cmake generated
+CMakeFiles/
+*.vcxproj*
+*.sln
 CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-_deps
+
+#libs
+!common/*
+RayTracingTest/model
+RayTracingTest/cmake_install.cmake
+*.cmake

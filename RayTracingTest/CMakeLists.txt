@@ -84,9 +84,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY ${MSVC_RUN
 ################################################################################
 if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
     target_include_directories(${PROJECT_NAME} PUBLIC
-        "$<$<CONFIG:Debug>:"
-            "${CMAKE_CURRENT_SOURCE_DIR}/../../../assimp/include"
-        ">"
         "$<$<CONFIG:Release>:"
             "${CMAKE_CURRENT_SOURCE_DIR}/../../vcpkg/installed/x86-windows/include"
         ">"
