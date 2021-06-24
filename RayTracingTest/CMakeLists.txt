@@ -46,6 +46,19 @@ set(ALL_FILES
 )
 
 ################################################################################
+# Dependencies
+################################################################################
+if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
+    set(ADDITIONAL_LIBRARY_DEPENDENCIES
+        "$<$<CONFIG:Debug>:"
+            "../src/Debug/glfw3;"
+            "../src/Debug/assimp-vc142-mtd"
+        ">"
+    )
+endif()
+target_link_libraries(${PROJECT_NAME} PRIVATE "${ADDITIONAL_LIBRARY_DEPENDENCIES}")
+
+################################################################################
 # Target
 ################################################################################
 add_executable(${PROJECT_NAME} ${ALL_FILES})
@@ -199,16 +212,5 @@ if(MSVC)
     endif()
 endif()
 
-################################################################################
-# Dependencies
-################################################################################
-if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
-    set(ADDITIONAL_LIBRARY_DEPENDENCIES
-        "$<$<CONFIG:Debug>:"
-            "../src/Debug/glfw3;"
-            "../src/Debug/assimp-vc142-mtd"
-        ">"
-    )
-endif()
-target_link_libraries(${PROJECT_NAME} PRIVATE "${ADDITIONAL_LIBRARY_DEPENDENCIES}")
+
 
