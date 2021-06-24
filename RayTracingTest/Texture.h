@@ -2,7 +2,7 @@
 
 #include "Utility.h"
 #include "stb_image.h"
-#include <filesystem>
+//#include <filesystem>
 #include <assimp/scene.h>
 
 class Texture {

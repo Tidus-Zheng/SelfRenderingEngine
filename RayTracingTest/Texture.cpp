@@ -18,9 +18,9 @@ void Texture::MakeTextureByPath(string path)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	//stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-	filesystem::path p(path);
+	//filesystem::path p(path);
 
-	unsigned char* data = stbi_load(filesystem::absolute(p).string().c_str(), &width, &height, &channels, 0);
+	unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 
 	if (data)
 	{
