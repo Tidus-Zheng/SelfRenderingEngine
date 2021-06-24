@@ -46,5 +46,3 @@ CMakeCache.txt
 #libs
 !common/*
 RayTracingTest/model
-RayTracingTest/cmake_install.cmake
-*.cmake
