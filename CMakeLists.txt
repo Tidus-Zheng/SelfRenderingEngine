@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16.0 FATAL_ERROR)
 
-set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
+set(CMAKE_SYSTEM_VERSION 10.0.19041.0 CACHE STRING "" FORCE)
 
 project(RayTracingTest C CXX)
 
@@ -12,8 +12,7 @@ if(NOT CMAKE_VS_PLATFORM_NAME)
 endif()
 message("${CMAKE_VS_PLATFORM_NAME} architecture in use")
 
-if(NOT ("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64"
-     OR "${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x86"))
+if(NOT ("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64"))
     message(FATAL_ERROR "${CMAKE_VS_PLATFORM_NAME} arch is not supported!")
 endif()
 
@@ -86,4 +85,88 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Sub-projects
 ################################################################################
 add_subdirectory(RayTracingTest)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+set(PROJECT_NAME ALL_BUILD)
+
+################################################################################
+# Source groups
+################################################################################
+set(no_group_source_files
+    "CMakeLists.txt"
+)
+source_group("" FILES ${no_group_source_files})
+
+set(ALL_FILES
+    ${no_group_source_files}
+)
+
+add_custom_target(${PROJECT_NAME} SOURCES ${ALL_FILES})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+set(PROJECT_NAME ZERO_CHECK)
+
+################################################################################
+# Source groups
+################################################################################
+set(CMake_Rules
+    "CMakeFiles/92ae6b5528eeebc21a264d4e5483bb03/generate.stamp.rule"
+)
+source_group("CMake Rules" FILES ${CMake_Rules})
+
+set(ALL_FILES
+    ${CMake_Rules}
+)
+
+add_custom_target(${PROJECT_NAME} SOURCES ${ALL_FILES})
 
