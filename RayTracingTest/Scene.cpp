@@ -10,7 +10,7 @@ void Scene::start()
 	camera.SetLookAt(glm::vec3(0, 10, 0));
 	orbitControl.SetCamera(&camera);
 
-	model.LoadModel("./model/nanosuit.obj");
+	model.LoadModel("E:/model/model/nanosuit.obj");
 }
 
 void Scene::update()
