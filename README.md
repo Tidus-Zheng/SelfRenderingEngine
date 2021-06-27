@@ -1,4 +1,5 @@
 # ray-tracing
+![Build status](https://ci.appveyor.com/api/projects/status/github/Tidus-Zheng/ray-tracing?svg=true)
 
 studing ray tracing with opengl
 
