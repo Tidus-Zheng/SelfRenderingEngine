@@ -16,8 +16,8 @@ static void error_callback(int error, const char* description)
 int main(void)
 {
 	GLFWwindow* window;
-	int width = 640;
-	int height = 480;
+	int width = 1280;
+	int height = 720;
 
 	glfwSetErrorCallback(error_callback);
 
@@ -27,8 +27,7 @@ int main(void)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 	//enable depth buffer
-	//glfwWindowHint(GLFW_DEPTH_BITS, GL_TRUE);
-
+	glfwWindowHint(GLFW_DEPTH_BITS, GL_TRUE);
 
 	window = glfwCreateWindow(width, height, "Simple example", NULL, NULL);
 
@@ -65,6 +64,16 @@ int main(void)
 		}
 
 		scene.update();
+
+		//window resize
+		int newWidth = width, newHeight = height;
+		glfwGetWindowSize(window, &newWidth, &newHeight);
+		if (newWidth != width || newHeight != height) {
+			glfwSetWindowSize(window, newWidth, newHeight);
+			scene.SetSceneSize(newWidth, newHeight);
+			width = newWidth;
+			height = newHeight;
+		}
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
