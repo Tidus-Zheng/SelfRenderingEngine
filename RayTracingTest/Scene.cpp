@@ -5,10 +5,11 @@
 void Scene::start()
 {
 	simpleShader.init("vertex.vs", "fragment.fs");
-	camera.SetResulution(width, height);
-	camera.SetPosition(glm::vec3(0, 10, 10));
-	camera.SetLookAt(glm::vec3(0, 10, 0));
-	orbitControl.SetCamera(&camera);
+	camera = new Camera();
+	camera->SetResulution(width, height);
+	camera->SetPosition(glm::vec3(0, 10, 20));
+	camera->SetLookAt(glm::vec3(0, 10, 0));
+	orbitControl.SetCamera(camera);
 
 	model.LoadModel("E:/model/model/nanosuit.obj");
 }
@@ -25,14 +26,14 @@ void Scene::update()
 
 	simpleShader.UseProgram();
 	mat4x4_identity(m);
-	camera.GetViewMatrix(view);
-	camera.GetProjMatrix(proj);
+	camera->GetViewMatrix(view);
+	camera->GetProjMatrix(proj);
 	glUniformMatrix4fv(simpleShader.GetUniformLocation("model"), 1, GL_FALSE, (const GLfloat*)m);
 	glUniformMatrix4fv(simpleShader.GetUniformLocation("view"), 1, GL_FALSE, (const GLfloat*)view);
 	glUniformMatrix4fv(simpleShader.GetUniformLocation("proj"), 1, GL_FALSE, (const GLfloat*)proj);
 
 	glm::vec3 lightDir = directionLight.GetDir();
-	glm::vec3 cameraPosition = camera.GetPosition();
+	glm::vec3 cameraPosition = camera->GetPosition();
 	glUniform3f(simpleShader.GetUniformLocation("lightDir"), lightDir.x, lightDir.y, lightDir.z);
 	glUniform3f(simpleShader.GetUniformLocation("lightColor"), directionLight.color.x, directionLight.color.y, directionLight.color.z);
 	glUniform3f(simpleShader.GetUniformLocation("cameraPos"), cameraPosition.x, cameraPosition.y, cameraPosition.z);

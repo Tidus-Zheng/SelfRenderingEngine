@@ -71,16 +71,26 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		}
 	}
 
+	Material mat;
 	if (mesh->mMaterialIndex >= 0) {
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+
 		vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, diffuse);
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
+		vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_NORMALS, normal);
+		textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+
 		vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, specular);
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+
+		mat.diffuse = diffuseMaps[0];
+		//mat.normal = normalMaps[0];
+		//mat.specular = specularMaps[0];
 	}
 
 	return Mesh(vertices, indices, textures);
+	//return Mesh(vertices, indices, mat);
 }
 
 vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, TextureType typeName)
@@ -103,5 +113,6 @@ void Model::Draw(ShaderManger shader)
 {
 	for (int i = 0; i < meshes.size(); i++) {
 		meshes[i].Draw(shader);
+		//meshes[i].Draw();
 	}
 }

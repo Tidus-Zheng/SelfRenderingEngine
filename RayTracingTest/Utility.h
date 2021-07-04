@@ -24,7 +24,8 @@ struct Vertex {
 
 enum TextureType {
 	diffuse = 'd',
-	specular = 's'
+	specular = 's',
+	normal = 'n',
 };
 
 //struct Texture {

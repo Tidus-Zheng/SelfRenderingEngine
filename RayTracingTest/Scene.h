@@ -52,7 +52,7 @@ private:
 	}
 
 public:
-	Camera camera;
+	Camera* camera;
 	CameraOrbitControl orbitControl;
 	ShaderManger simpleShader;
 
@@ -72,7 +72,7 @@ public:
 	}
 
 	~Scene() {
-
+		delete camera;
 	}
 
 	void SetSceneSize(int _width, int _height) { width = _width; height = _height; }
@@ -92,4 +92,3 @@ public:
 	void mouse_button_clicked(int button, int mods);
 	void wheel_update(double offset);
 };
-

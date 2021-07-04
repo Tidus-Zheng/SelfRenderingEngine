@@ -3,6 +3,8 @@
 #include "Utility.h"
 #include "ShaderManager.h"
 #include "Texture.h"
+#include "Material.h"
+//#include "Scene.h"
 
 class Mesh {
 private:
@@ -12,9 +14,13 @@ private:
 public:
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
+	Material material;
 	vector<Texture> textures;
 
 	Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures);
-	//Init(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
+	Mesh(vector<Vertex> vertices, vector<GLuint> indices, Material material);
+
 	void Draw(ShaderManger shader);
+	//render with material
+	void Draw();
 };

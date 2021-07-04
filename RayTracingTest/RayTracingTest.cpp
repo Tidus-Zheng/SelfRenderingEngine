@@ -2,10 +2,8 @@
 
 #include "Utility.h"
 #include "ShaderManager.h"
-#include "Camera.h"
 #include <glm/gtc/type_ptr.hpp>
 #include "Scene.h"
-
 
 static void error_callback(int error, const char* description)
 {
@@ -31,7 +29,7 @@ int main(void)
 
 	window = glfwCreateWindow(width, height, "Simple example", NULL, NULL);
 
-	Scene scene(window, width, height);
+	Scene* scene = new Scene(window, width, height);
 
 	if (!window)
 	{
@@ -43,7 +41,7 @@ int main(void)
 	gladLoadGL(glfwGetProcAddress);
 	glfwSwapInterval(1); //1: 60fps, 0:unlimit
 
-	scene.start();
+	scene->start();
 
 	float currentTime = static_cast<float>(glfwGetTime());
 	float lastFramesPrint = currentTime;
@@ -63,14 +61,14 @@ int main(void)
 			frameCount = 0;
 		}
 
-		scene.update();
+		scene->update();
 
 		//window resize
 		int newWidth = width, newHeight = height;
 		glfwGetWindowSize(window, &newWidth, &newHeight);
 		if (newWidth != width || newHeight != height) {
 			glfwSetWindowSize(window, newWidth, newHeight);
-			scene.SetSceneSize(newWidth, newHeight);
+			scene->SetSceneSize(newWidth, newHeight);
 			width = newWidth;
 			height = newHeight;
 		}
@@ -80,7 +78,8 @@ int main(void)
 	}
 
 	glfwDestroyWindow(window);
-	scene.destroy();
+	scene->destroy();
+	delete scene;
 
 	glfwTerminate();
 	exit(EXIT_SUCCESS);
