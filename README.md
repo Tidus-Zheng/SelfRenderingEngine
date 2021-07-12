@@ -1,5 +1,7 @@
-# ray-tracing
+# Rendering Engine
 ![Build status](https://ci.appveyor.com/api/projects/status/github/Tidus-Zheng/ray-tracing?svg=true)
+
+make self rendering engine
 
 studing ray tracing with opengl
 
