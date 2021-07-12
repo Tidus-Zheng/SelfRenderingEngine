@@ -9,18 +9,20 @@ private:
 
 public:
 	Texture diffuse, normal, specular;
-	ShaderManger shader;
+	//ShaderManger* shader;
+	unique_ptr<ShaderManger> shader;
 
 	Material() {
-		shader.init("vertex.vs", "phongFragment.fs");
+		shader = make_unique<ShaderManger>();
+		shader->init("vertex.vs", "fragment.fs");
 	}
 
 	~Material(){
-
+		//delete shader;
 	}
 
 	void InitShader(string vsFileName, string fsFileName) {
-		shader.init(vsFileName, fsFileName);
+		shader->init(vsFileName, fsFileName);
 	}
 
 	

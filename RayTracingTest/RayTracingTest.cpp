@@ -29,8 +29,12 @@ int main(void)
 
 	window = glfwCreateWindow(width, height, "Simple example", NULL, NULL);
 
-	Scene* scene = new Scene(window, width, height);
-
+	//Scene* scene = new Scene(window, width, height);
+	//Scene* scene = new Scene();
+	//scene->SetWindow(window);
+	//scene->SetSceneSize(width, height);
+	Scene::Instance().SetWindow(window);
+	Scene::Instance().SetSceneSize(width, height);
 	if (!window)
 	{
 		glfwTerminate();
@@ -41,7 +45,8 @@ int main(void)
 	gladLoadGL(glfwGetProcAddress);
 	glfwSwapInterval(1); //1: 60fps, 0:unlimit
 
-	scene->start();
+	//scene->start();
+	Scene::Instance().start();
 
 	float currentTime = static_cast<float>(glfwGetTime());
 	float lastFramesPrint = currentTime;
@@ -61,14 +66,14 @@ int main(void)
 			frameCount = 0;
 		}
 
-		scene->update();
+		Scene::Instance().update();
 
 		//window resize
 		int newWidth = width, newHeight = height;
 		glfwGetWindowSize(window, &newWidth, &newHeight);
 		if (newWidth != width || newHeight != height) {
 			glfwSetWindowSize(window, newWidth, newHeight);
-			scene->SetSceneSize(newWidth, newHeight);
+			Scene::Instance().SetSceneSize(newWidth, newHeight);
 			width = newWidth;
 			height = newHeight;
 		}
@@ -78,8 +83,8 @@ int main(void)
 	}
 
 	glfwDestroyWindow(window);
-	scene->destroy();
-	delete scene;
+	Scene::Instance().destroy();
+	//delete scene;
 
 	glfwTerminate();
 	exit(EXIT_SUCCESS);

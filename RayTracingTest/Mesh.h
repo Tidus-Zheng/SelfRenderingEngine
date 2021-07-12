@@ -14,13 +14,11 @@ private:
 public:
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
-	Material material;
 	vector<Texture> textures;
+	unique_ptr<Material> material;
 
-	Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures);
-	Mesh(vector<Vertex> vertices, vector<GLuint> indices, Material material);
+	Mesh(vector<Vertex> vertices, vector<GLuint> indices);
 
-	void Draw(ShaderManger shader);
 	//render with material
-	void Draw();
+	void Draw(mat4x4 model);
 };

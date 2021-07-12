@@ -12,6 +12,7 @@ class Model {
 private:
 	string directory;
 	vector<Mesh> meshes;
+	glm::vec3 position;
 
 	void processNode(aiNode* node, const aiScene* scene);
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
@@ -19,7 +20,7 @@ private:
 
 public:
 	Model() {
-
+		position = glm::vec3(0);
 	}
 
 	Model(char* path)
@@ -28,6 +29,7 @@ public:
 	}
 
 	void LoadModel(string path);
-
-	void Draw(ShaderManger shader);
+	void SetPosition(double x, double y, double z);
+	void SetPosition(glm::vec3 position);
+	void Draw();
 };

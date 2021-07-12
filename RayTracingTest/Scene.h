@@ -9,13 +9,17 @@
 #include "DirectionalLight.h"
 #include "Model.h"
 
-class Scene {
+class Scene final{
 private:
 	int width, height;
 	GLFWwindow* window;
 	bool firstClick = true;
 	double firstX, firstY;
-	DirectionalLight directionLight;
+
+	Scene();
+	~Scene() {
+		delete camera;
+	}
 
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
@@ -23,23 +27,23 @@ private:
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
 
-		static_cast<Scene*>(glfwGetWindowUserPointer(window))->keybord_event(action, key);
+		Scene::Instance().keybord_event(action, key);
 	}
 
 	//mouse position event;
 	static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 	{
-		static_cast<Scene*>(glfwGetWindowUserPointer(window))->cursor_position_update(xpos, ypos);
+		Scene::Instance().cursor_position_update(xpos, ypos);
 	}
 
 	static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	{
-		static_cast<Scene*>(glfwGetWindowUserPointer(window))->mouse_button_clicked(button, mods);
+		Scene::Instance().mouse_button_clicked(button, mods);
 	}
 
 	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	{
-		static_cast<Scene*>(glfwGetWindowUserPointer(window))->wheel_update(yoffset);
+		Scene::Instance().wheel_update(yoffset);
 	}
 
 	void SetInputEvent() {
@@ -54,26 +58,21 @@ private:
 public:
 	Camera* camera;
 	CameraOrbitControl orbitControl;
-	ShaderManger simpleShader;
+	DirectionalLight directionLight;
 
 	Model model;
+	Model model2;
 
 	//Mesh cubeMesh;
 
 	bool showPos = false;
-	Scene() {
 
-	}
-
-	Scene(GLFWwindow* _window, int _width, int _height)
-		:window(_window), width(_width), height(_height)
-	{
-		SetInputEvent();
-	}
-
-	~Scene() {
-		delete camera;
-	}
+	static Scene& Instance();
+	//Scene(GLFWwindow* _window, int _width, int _height)
+	//	:window(_window), width(_width), height(_height)
+	//{
+	//	SetInputEvent();
+	//}
 
 	void SetSceneSize(int _width, int _height) { width = _width; height = _height; }
 	void SetWindow(GLFWwindow* _window) {

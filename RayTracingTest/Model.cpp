@@ -14,6 +14,16 @@ void Model::LoadModel(string path)
 	processNode(scene->mRootNode, scene);
 }
 
+void Model::SetPosition(double x, double y, double z)
+{
+	position = glm::vec3(x, y, z);
+}
+
+void Model::SetPosition(glm::vec3 position)
+{
+	this->position = position;
+}
+
 void Model::processNode(aiNode* node, const aiScene* scene)
 {
 	for (GLuint i = 0; i < node->mNumMeshes; i++) {
@@ -71,7 +81,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		}
 	}
 
-	Material mat;
+	//Material mat;
+	Mesh outputMesh(vertices, indices);
 	if (mesh->mMaterialIndex >= 0) {
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
@@ -84,13 +95,10 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, specular);
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
-		mat.diffuse = diffuseMaps[0];
-		//mat.normal = normalMaps[0];
-		//mat.specular = specularMaps[0];
+		outputMesh.material->diffuse = diffuseMaps[0];
 	}
 
-	return Mesh(vertices, indices, textures);
-	//return Mesh(vertices, indices, mat);
+	return outputMesh;
 }
 
 vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, TextureType typeName)
@@ -109,10 +117,14 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type,
 	return textures;
 }
 
-void Model::Draw(ShaderManger shader)
+void Model::Draw()
 {
 	for (int i = 0; i < meshes.size(); i++) {
-		meshes[i].Draw(shader);
-		//meshes[i].Draw();
+		mat4x4 model, rModel;
+		mat4x4_identity(model);
+		mat4x4_translate(model, position.x, position.y, position.z);
+		mat4x4_rotate_Y(model, model, (float)glfwGetTime());
+
+		meshes[i].Draw(model);
 	}
 }
