@@ -1,7 +1,5 @@
 #include "ShaderManager.h"
 
-#define shader_path "E:/RayTracing/ray-tracing/RayTracingTest/shader/"
-
 std::string ShaderManger::ReadFromFile(const GLchar* pathToFile)
 {
 	std::string content;
@@ -24,8 +22,9 @@ std::string ShaderManger::ReadFromFile(const GLchar* pathToFile)
 }
 
 void ShaderManger::init(std::string vertexShaderFileName, std::string fragmentShaderFileName) {
-	std::string vertexShaderSrc = ReadFromFile((shader_path + vertexShaderFileName).c_str());
-	std::string fragmentShaderSrc = ReadFromFile((shader_path + fragmentShaderFileName).c_str());
+	auto path = std::filesystem::current_path();
+	std::string vertexShaderSrc = ReadFromFile((path.string()+"\\shader\\" + vertexShaderFileName).c_str());
+	std::string fragmentShaderSrc = ReadFromFile((path.string() + "\\shader\\" + fragmentShaderFileName).c_str());
 
 	const char* vertexPointer = vertexShaderSrc.c_str();
 	const char* fragmentPointer = fragmentShaderSrc.c_str();
