@@ -20,11 +20,10 @@ void Texture::MakeTextureByPath(string path)
 	//stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
 	filesystem::path p(path);
 
-	unsigned char* data = stbi_load(filesystem::absolute(p).string().c_str(), &width, &height, &channels, 0);
-
+	unsigned char* data = stbi_load(filesystem::absolute(p).string().c_str(), &width, &height, &channels, 4);
 	if (data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else

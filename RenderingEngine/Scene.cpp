@@ -17,15 +17,15 @@ void Scene::start()
 {
 	camera = new Camera();
 	camera->SetResulution(width, height);
-	camera->SetPosition(glm::vec3(0, 10, 20));
-	camera->SetLookAt(glm::vec3(0, 10, 0));
+	camera->SetPosition(glm::vec3(0, 8, 23));
+	camera->SetLookAt(glm::vec3(0, 8, 0));
 	orbitControl.SetCamera(camera);
 
 	model.LoadModel("E:/model/model/nanosuit.obj");
-	model2.LoadModel("E:/model/model/nanosuit.obj");
+	//model2.LoadModel("E:/model/model/nanosuit.obj");
 
-	model.SetPosition(-5, 0, 0);
-	model2.SetPosition(5, 0, 0);
+	//model.SetPosition(-5, 0, 0);
+	//model2.SetPosition(5, 0, 0);
 }
 
 void Scene::update()
@@ -39,7 +39,7 @@ void Scene::update()
 	glEnable(GL_DEPTH_TEST);
 	
 	model.Draw();
-	model2.Draw();
+	//model2.Draw();
 }
 
 void Scene::destroy()

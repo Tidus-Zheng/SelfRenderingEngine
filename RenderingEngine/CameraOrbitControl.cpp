@@ -54,7 +54,7 @@ void CameraOrbitControl::ArmLengthUpdate(double offset)
 {
 	glm::vec3 lookAt = camera->GetLookAt();
 
-	double sensitivity = 0.2;
+	double sensitivity = 1.f;
 	armLength += offset * sensitivity;
 
 	camera->SetPosition(lookAt + glm::normalize(armDir) * armLength);

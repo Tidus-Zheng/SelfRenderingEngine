@@ -58,17 +58,22 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		if (mesh->mTextureCoords[0]) {
 			uv.x = mesh->mTextureCoords[0][i].x;
 			uv.y = mesh->mTextureCoords[0][i].y;
-
-			//vector.x = mesh->mTangents[i].x;
-			//vector.y = mesh->mTangents[i].y;
-			//vector.z = mesh->mTangents[i].z;
-			//vertex.tangent = vector;
-
-			//vector.x = mesh->mBitangents[i].x;
-			//vector.y = mesh->mBitangents[i].y;
-			//vector.z = mesh->mBitangents[i].z;
-			//vertex.bitangent = vector;
 		}
+
+		if (mesh->mTangents) {
+			vector.x = mesh->mTangents[i].x;
+			vector.y = mesh->mTangents[i].y;
+			vector.z = mesh->mTangents[i].z;
+			vertex.tangent = vector;
+		}
+
+		if (mesh->mBitangents) {
+			vector.x = mesh->mBitangents[i].x;
+			vector.y = mesh->mBitangents[i].y;
+			vector.z = mesh->mBitangents[i].z;
+			vertex.bitangent = vector;
+		}
+
 		vertex.uv = uv;
 
 		vertices.push_back(vertex);
@@ -86,16 +91,21 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	if (mesh->mMaterialIndex >= 0) {
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
+		cout << "diffuse" << endl;
 		vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, diffuse);
-		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-
-		vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_NORMALS, normal);
-		textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-
+		//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+		cout << "normal" << endl;
+		vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, normal);
+		//textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+		cout << "specular" << endl;
 		vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, specular);
-		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+		//textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
 		outputMesh.material->diffuse = diffuseMaps[0];
+		if (normalMaps.size() > 0)
+			outputMesh.material->normal = normalMaps[0];
+		if (specularMaps.size() > 0)
+			outputMesh.material->specular = specularMaps[0];
 	}
 
 	return outputMesh;
@@ -107,6 +117,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type,
 	for (GLuint i = 0; i < mat->GetTextureCount(type); i++) {
 		aiString str;
 		mat->GetTexture(type, i, &str);
+		cout << str.C_Str() << endl;
 		Texture texture;
 		texture.TextureFromFile(str.C_Str(), directory);
 		texture.type = typeName;
@@ -123,7 +134,7 @@ void Model::Draw()
 		mat4x4 model, rModel;
 		mat4x4_identity(model);
 		mat4x4_translate(model, position.x, position.y, position.z);
-		mat4x4_rotate_Y(model, model, (float)glfwGetTime());
+		//mat4x4_rotate_Y(model, model, (float)glfwGetTime());
 
 		meshes[i].Draw(model);
 	}
