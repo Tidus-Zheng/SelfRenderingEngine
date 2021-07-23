@@ -13,16 +13,17 @@ layout(location = 4) in vec3 vBitangent;
 out vec3 pos;
 out vec3 normal;
 out vec2 uv;
-out vec3 tangent;
-out vec3 bitangent;
+out mat3 TBN;
 
 void main() {
     mat4 MVP = proj * view * model;
     pos = vPos;//  (MVP * vec4(vPos.xyz, 1.0)).xyz;
-    normal = normalize(mat3(transpose(inverse(model))) * vNormal);
+    vec3 T = normalize(vec3(model * vec4(vTangent, 0)));
+    vec3 B = normalize(vec3(model * vec4(vBitangent, 0)));
+    vec3 N = normalize(vec3(model * vec4(vNormal, 0)));
+    TBN = mat3(T, B, N);
+    normal = N;// normalize(mat3(transpose(inverse(model))) * vNormal);
     uv = vUv;
+    
     gl_Position = MVP * vec4(vPos.xyz, 1.0);
-    tangent = vTangent;
-    bitangent = vBitangent;
-    // color = vCol;
 }

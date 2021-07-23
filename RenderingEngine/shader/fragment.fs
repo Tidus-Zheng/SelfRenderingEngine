@@ -4,6 +4,7 @@ in vec3 normal;
 in vec2 uv;
 in vec3 tangent;
 in vec3 bitangent;
+in mat3 TBN;
 
 layout(binding = 0) uniform sampler2D texture_diffuse;
 layout(binding = 1) uniform sampler2D texture_normal;
@@ -14,12 +15,11 @@ uniform vec3 lightColor;
 uniform vec3 cameraPos;
 
 void main() {
-    // gl_FragColor = texture(texture_d1, uv);
-    // vec3 n = texture(texture_normal, uv).xyz;
-    vec3 n = normal;
-    vec3 L = lightDir;
+    vec3 n = normalize(texture(texture_normal, uv).xyz * 2.0 - 1.0);
+    n = normalize(TBN * n);
+    
+    vec3 L = normalize(lightDir);
     vec3 E = normalize(cameraPos);
-    vec3 halfEye = (L + E) / 2;
     vec3 R = normalize(-reflect(L, n));
 
     float ambientStrength = 0.1;
@@ -28,7 +28,5 @@ void main() {
     vec3 specular = pow(max(dot(E, R), 0.0), 8) * lightColor;
     // vec3 specular = texture(texture_specular, uv).xyz * lightColor;
     vec3 phong = (ambient + diffuse + specular) * texture(texture_diffuse, uv).xyz;
-    gl_FragColor = vec4(phong,1);
-    // gl_FragColor = vec4(specular, 1);
-    // gl_FragColor = texture(texture_specular, uv);
+    gl_FragColor = vec4(phong, 1);
 }

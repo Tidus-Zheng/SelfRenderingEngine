@@ -3,7 +3,7 @@
 void Model::LoadModel(string path)
 {
 	Assimp::Importer import;
-	const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs|aiProcess_CalcTangentSpace );
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 		cout << "ERROR::ASSIMP::" << import.GetErrorString() << endl;
@@ -17,7 +17,7 @@ void Model::LoadModel(string path)
 void Model::SetPosition(double x, double y, double z)
 {
 	position = glm::vec3(x, y, z);
-}
+} 
 
 void Model::SetPosition(glm::vec3 position)
 {
@@ -134,7 +134,7 @@ void Model::Draw()
 		mat4x4 model, rModel;
 		mat4x4_identity(model);
 		mat4x4_translate(model, position.x, position.y, position.z);
-		//mat4x4_rotate_Y(model, model, (float)glfwGetTime());
+		mat4x4_rotate_Y(model, model, (float)glfwGetTime());
 
 		meshes[i].Draw(model);
 	}
